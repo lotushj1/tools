@@ -16,35 +16,19 @@
 
 @layer components {
   .clay-card {
-    @apply relative rounded-clay border-[3px] border-white/60 bg-gradient-to-br from-background to-accent-light shadow-clay transition-all duration-200;
-  }
-
-  .clay-card:hover {
-    @apply -translate-y-1 scale-[1.02] shadow-clay-hover;
+    @apply relative rounded-clay border-[3px] border-white/60 bg-gradient-to-br from-background to-accent-light shadow-clay;
   }
 
   .clay-button {
-    @apply inline-flex items-center justify-center gap-2 rounded-2xl px-6 py-3 font-body font-semibold transition-all duration-200;
+    @apply inline-flex items-center justify-center gap-2 rounded-2xl px-6 py-3 font-body font-semibold;
   }
 
   .clay-button-primary {
     @apply clay-button bg-gradient-to-br from-cta to-blue-400 text-white shadow-[0_4px_12px_rgba(37,99,235,0.4),inset_0_1px_0_rgba(255,255,255,0.2)];
   }
 
-  .clay-button-primary:hover {
-    @apply -translate-y-0.5 shadow-[0_6px_16px_rgba(37,99,235,0.5),inset_0_1px_0_rgba(255,255,255,0.2)];
-  }
-
-  .clay-button-primary:active {
-    @apply translate-y-0 shadow-[0_2px_8px_rgba(37,99,235,0.3),inset_0_1px_0_rgba(255,255,255,0.2)];
-  }
-
   .clay-button-secondary {
     @apply clay-button bg-gradient-to-br from-primary to-secondary text-white shadow-[0_4px_12px_rgba(249,115,22,0.4),inset_0_1px_0_rgba(255,255,255,0.2)];
-  }
-
-  .clay-button-secondary:hover {
-    @apply -translate-y-0.5 shadow-[0_6px_16px_rgba(249,115,22,0.5),inset_0_1px_0_rgba(255,255,255,0.2)];
   }
 }
 

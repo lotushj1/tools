@@ -17,11 +17,11 @@ export default function ToolCard({
   color = "from-primary to-secondary",
 }: ToolCardProps) {
   return (
-    <Link href={href} className="block group">
+    <Link href={href} className="block">
       <article className="clay-card p-6 h-full flex flex-col">
         {/* Icon */}
         <div
-          className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${color} flex items-center justify-center mb-4 shadow-lg transition-transform group-hover:scale-110 group-hover:rotate-3`}
+          className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${color} flex items-center justify-center mb-4 shadow-lg`}
         >
           <Icon className="w-7 h-7 text-white" />
         </div>
@@ -35,7 +35,7 @@ export default function ToolCard({
         </p>
 
         {/* Action */}
-        <div className="flex items-center gap-2 font-body font-medium text-primary group-hover:gap-3 transition-all">
+        <div className="flex items-center gap-2 font-body font-medium text-primary">
           <span>立即使用</span>
           <ArrowRight className="w-4 h-4" />
         </div>

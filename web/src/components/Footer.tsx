@@ -27,7 +27,7 @@ export default function Footer() {
               href="https://github.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-10 h-10 rounded-xl bg-accent-light flex items-center justify-center hover:bg-primary/10 transition-colors"
+              className="w-10 h-10 rounded-xl bg-accent-light flex items-center justify-center"
               aria-label="GitHub"
             >
               <Github className="w-5 h-5 text-text/70" />
@@ -36,7 +36,7 @@ export default function Footer() {
               href="https://twitter.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-10 h-10 rounded-xl bg-accent-light flex items-center justify-center hover:bg-primary/10 transition-colors"
+              className="w-10 h-10 rounded-xl bg-accent-light flex items-center justify-center"
               aria-label="Twitter"
             >
               <Twitter className="w-5 h-5 text-text/70" />

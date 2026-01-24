@@ -40,7 +40,7 @@ export default function Hero() {
             <Rocket className="w-5 h-5" />
             開始探索
           </button>
-          <button className="clay-button bg-white/50 border-2 border-primary/20 text-text hover:bg-white/80 px-8 py-4">
+          <button className="clay-button bg-white/50 border-2 border-primary/20 text-text px-8 py-4">
             查看所有工具
           </button>
         </div>
