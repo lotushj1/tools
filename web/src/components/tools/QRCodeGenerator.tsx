@@ -4,22 +4,33 @@ import { useState, useEffect } from "react";
 import { Download, Link as LinkIcon, Copy, Check } from "lucide-react";
 import QRCode from "qrcode";
 
-// Preset color options (orange/brown theme only)
-const colorPresets = [
-  { name: "深琥珀", value: "#9A3412" },
-  { name: "咖啡色", value: "#78350F" },
-  { name: "深橘", value: "#C2410C" },
-  { name: "純黑", value: "#000000" },
-];
-
 export default function QRCodeGenerator() {
   const [url, setUrl] = useState("");
   const [qrColor, setQrColor] = useState("#9A3412");
+  const [hexInput, setHexInput] = useState("#9A3412");
   const [includeWhiteBg, setIncludeWhiteBg] = useState(true);
   const [qrDataUrl, setQrDataUrl] = useState<string | null>(null);
   const [qrTransparentUrl, setQrTransparentUrl] = useState<string | null>(null);
   const [svgString, setSvgString] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
+
+  // Sync hex input when color picker changes
+  const handleColorPickerChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const color = e.target.value;
+    setQrColor(color);
+    setHexInput(color.toUpperCase());
+  };
+
+  // Handle hex input change
+  const handleHexInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let value = e.target.value;
+    setHexInput(value);
+
+    // Validate and apply hex color
+    if (/^#[0-9A-Fa-f]{6}$/.test(value)) {
+      setQrColor(value);
+    }
+  };
 
   // Generate QR Code when URL or color changes
   useEffect(() => {
@@ -80,12 +91,13 @@ export default function QRCodeGenerator() {
       });
   }, [url, qrColor]);
 
-  // Copy to clipboard
+  // Copy to clipboard (respects background setting)
   const copyToClipboard = async () => {
-    if (!qrDataUrl) return;
+    const dataUrl = includeWhiteBg ? qrDataUrl : qrTransparentUrl;
+    if (!dataUrl) return;
 
     try {
-      const response = await fetch(qrDataUrl);
+      const response = await fetch(dataUrl);
       const blob = await response.blob();
       await navigator.clipboard.write([
         new ClipboardItem({ "image/png": blob }),
@@ -94,9 +106,8 @@ export default function QRCodeGenerator() {
       setTimeout(() => setCopied(false), 2000);
     } catch (err) {
       console.error("Copy failed:", err);
-      // Fallback: try to copy as text (data URL)
       try {
-        await navigator.clipboard.writeText(qrDataUrl);
+        await navigator.clipboard.writeText(dataUrl);
         setCopied(true);
         setTimeout(() => setCopied(false), 2000);
       } catch {
@@ -147,12 +158,12 @@ export default function QRCodeGenerator() {
   const downloadSVG = () => {
     if (!svgString) return;
     const blob = new Blob([svgString], { type: "image/svg+xml" });
-    const url = URL.createObjectURL(blob);
+    const svgUrl = URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.download = "qrcode.svg";
-    link.href = url;
+    link.href = svgUrl;
     link.click();
-    URL.revokeObjectURL(url);
+    URL.revokeObjectURL(svgUrl);
   };
 
   return (
@@ -172,7 +183,7 @@ export default function QRCodeGenerator() {
           value={url}
           onChange={(e) => setUrl(e.target.value)}
           placeholder="https://example.com"
-          className="w-full px-4 py-3 rounded-xl border-2 border-primary/20 bg-white font-body text-text placeholder:text-text/40 focus:outline-none focus:border-primary transition-colors"
+          className="w-full px-4 py-3 rounded-xl border-2 border-primary/20 bg-white font-body text-text placeholder:text-text/40 focus:outline-none focus:border-primary"
           autoComplete="url"
         />
       </div>
@@ -180,25 +191,30 @@ export default function QRCodeGenerator() {
       {/* Color Settings */}
       <div className="clay-card p-6">
         <p className="font-body font-semibold text-text mb-3">QR Code 顏色</p>
-        <div className="flex flex-wrap gap-3">
-          {colorPresets.map((preset) => (
-            <button
-              key={preset.value}
-              onClick={() => setQrColor(preset.value)}
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg border-2 font-body text-sm transition-colors ${
-                qrColor === preset.value
-                  ? "border-primary bg-primary/10"
-                  : "border-gray-200 bg-white"
-              }`}
-              aria-label={`選擇 ${preset.name}`}
-            >
-              <span
-                className="w-4 h-4 rounded-full border border-gray-300"
-                style={{ backgroundColor: preset.value }}
-              />
-              {preset.name}
-            </button>
-          ))}
+        <div className="flex items-center gap-4">
+          {/* Color Picker */}
+          <input
+            type="color"
+            value={qrColor}
+            onChange={handleColorPickerChange}
+            className="w-12 h-12 rounded-lg cursor-pointer border-2 border-gray-200"
+            aria-label="選擇顏色"
+          />
+          {/* Hex Input */}
+          <input
+            type="text"
+            value={hexInput}
+            onChange={handleHexInputChange}
+            placeholder="#000000"
+            className="w-28 px-3 py-2 rounded-lg border-2 border-gray-200 bg-white font-body text-text text-center uppercase focus:outline-none focus:border-primary"
+            maxLength={7}
+            aria-label="輸入色碼"
+          />
+          {/* Preview */}
+          <div
+            className="w-8 h-8 rounded-full border-2 border-gray-200"
+            style={{ backgroundColor: qrColor }}
+          />
         </div>
       </div>
 
@@ -210,7 +226,7 @@ export default function QRCodeGenerator() {
               {/* QR Code Image */}
               <div className="p-4 bg-white rounded-2xl shadow-inner mb-6">
                 <img
-                  src={qrDataUrl}
+                  src={includeWhiteBg ? qrDataUrl : qrTransparentUrl || qrDataUrl}
                   alt="Generated QR Code"
                   width={300}
                   height={300}
@@ -218,10 +234,23 @@ export default function QRCodeGenerator() {
                 />
               </div>
 
+              {/* PNG Background Option */}
+              <label className="flex items-center gap-2 mb-6 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={includeWhiteBg}
+                  onChange={(e) => setIncludeWhiteBg(e.target.checked)}
+                  className="w-4 h-4 rounded border-gray-300 text-primary focus:ring-primary"
+                />
+                <span className="font-body text-text/70 text-sm">
+                  包含白色背景
+                </span>
+              </label>
+
               {/* Copy Button */}
               <button
                 onClick={copyToClipboard}
-                className={`mb-6 inline-flex items-center gap-2 px-6 py-3 rounded-xl border-2 font-body font-semibold transition-colors ${
+                className={`mb-6 inline-flex items-center gap-2 px-6 py-3 rounded-xl border-2 font-body font-semibold ${
                   copied
                     ? "border-primary bg-primary/10 text-primary"
                     : "border-gray-300 bg-white text-text"
@@ -241,24 +270,11 @@ export default function QRCodeGenerator() {
                 )}
               </button>
 
-              {/* PNG Background Option */}
-              <label className="flex items-center gap-2 mb-6 cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={includeWhiteBg}
-                  onChange={(e) => setIncludeWhiteBg(e.target.checked)}
-                  className="w-4 h-4 rounded border-gray-300 text-primary focus:ring-primary"
-                />
-                <span className="font-body text-text/70 text-sm">
-                  PNG 下載時包含白色背景
-                </span>
-              </label>
-
               {/* Download Buttons */}
               <div className="flex flex-wrap justify-center gap-3">
                 <button
                   onClick={downloadPNG}
-                  className="inline-flex items-center gap-2 px-5 py-3 rounded-xl border-2 border-gray-300 bg-white text-text font-body font-semibold transition-colors"
+                  className="inline-flex items-center gap-2 px-5 py-3 rounded-xl border-2 border-gray-300 bg-white text-text font-body font-semibold"
                   aria-label="下載 PNG 格式"
                 >
                   PNG
@@ -267,7 +283,7 @@ export default function QRCodeGenerator() {
 
                 <button
                   onClick={downloadJPG}
-                  className="inline-flex items-center gap-2 px-5 py-3 rounded-xl border-2 border-gray-300 bg-white text-text font-body font-semibold transition-colors"
+                  className="inline-flex items-center gap-2 px-5 py-3 rounded-xl border-2 border-gray-300 bg-white text-text font-body font-semibold"
                   aria-label="下載 JPG 格式"
                 >
                   JPG
@@ -276,7 +292,7 @@ export default function QRCodeGenerator() {
 
                 <button
                   onClick={downloadSVG}
-                  className="inline-flex items-center gap-2 px-5 py-3 rounded-xl border-2 border-gray-300 bg-white text-text font-body font-semibold transition-colors"
+                  className="inline-flex items-center gap-2 px-5 py-3 rounded-xl border-2 border-gray-300 bg-white text-text font-body font-semibold"
                   aria-label="下載 SVG 格式"
                 >
                   SVG
