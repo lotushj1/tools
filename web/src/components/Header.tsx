@@ -11,7 +11,7 @@ export default function Header() {
     <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-primary/10">
       <nav className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center shadow-clay">
+          <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center shadow-clay">
             <Wrench className="w-5 h-5 text-white" />
           </div>
           <span className="font-heading text-xl font-bold text-text">

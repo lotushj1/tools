@@ -45,7 +45,7 @@ export default function Features() {
               className="text-center"
             >
               {/* Icon */}
-              <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/10 to-secondary/10 border-2 border-primary/20 mb-6">
+              <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-primary/10 border-2 border-primary/20 mb-6">
                 <feature.icon className="w-8 h-8 text-primary" />
               </div>
 

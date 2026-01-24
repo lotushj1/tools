@@ -6,7 +6,6 @@ interface ToolCardProps {
   description: string;
   icon: LucideIcon;
   href: string;
-  color?: string;
 }
 
 export default function ToolCard({
@@ -14,15 +13,12 @@ export default function ToolCard({
   description,
   icon: Icon,
   href,
-  color = "from-primary to-secondary",
 }: ToolCardProps) {
   return (
     <Link href={href} className="block">
       <article className="clay-card p-6 h-full flex flex-col">
         {/* Icon */}
-        <div
-          className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${color} flex items-center justify-center mb-4 shadow-lg`}
-        >
+        <div className="w-14 h-14 rounded-2xl bg-primary flex items-center justify-center mb-4 shadow-lg">
           <Icon className="w-7 h-7 text-white" />
         </div>
 

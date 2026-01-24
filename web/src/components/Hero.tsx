@@ -15,23 +15,23 @@ export default function Hero() {
         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent-light border-2 border-primary/20 mb-8">
           <Sparkles className="w-4 h-4 text-primary" />
           <span className="font-body text-sm font-medium text-text">
-            創意編碼工具集合
+            免費實用小工具
           </span>
         </div>
 
         {/* Main Heading */}
         <h1 className="text-4xl md:text-6xl font-heading font-bold text-text mb-6 text-balance">
-          讓開發更有趣的
-          <span className="block mt-2 bg-gradient-to-r from-primary to-accent-deep bg-clip-text text-transparent">
-            Vibe Coding 工具
+          免費好用的
+          <span className="block mt-2 text-primary">
+            實用小工具集
           </span>
         </h1>
 
         {/* Subtitle */}
         <p className="text-lg md:text-xl font-body text-text/70 mb-10 max-w-2xl mx-auto text-balance">
-          探索各種實用的小工具，提升你的開發體驗。
+          這是我透過 Vibe Coding 製作的各種實用小工具。
           <br className="hidden md:block" />
-          簡單、有趣、即開即用。
+          完全免費、即開即用、簡單好上手。
         </p>
 
         {/* CTA Buttons */}

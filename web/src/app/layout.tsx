@@ -3,8 +3,8 @@ import "./globals.css";
 import AgentationProvider from "@/components/AgentationProvider";
 
 export const metadata: Metadata = {
-  title: "Vibe Coding Tools - 創意編碼小工具集合",
-  description: "讓開發更有趣的 Vibe Coding 工具集合，提供各種實用的編碼小工具",
+  title: "Vibe Tools - 免費實用小工具集",
+  description: "透過 Vibe Coding 製作的各種免費實用小工具，即開即用、簡單好上手",
 };
 
 export default function RootLayout({
