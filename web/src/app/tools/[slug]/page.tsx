@@ -1,7 +1,14 @@
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+
+// Dynamically import tool components (client-side only)
+const QRCodeGenerator = dynamic(
+  () => import("@/components/tools/QRCodeGenerator"),
+  { ssr: false }
+);
 
 // Tool data - in a real app, this would come from a database or API
 const toolsData: Record<string, { title: string; description: string }> = {
@@ -88,22 +95,26 @@ export default async function ToolPage({
             <p className="font-body text-lg text-text/70">{tool.description}</p>
           </div>
 
-          {/* Tool Interface Placeholder */}
-          <div className="clay-card p-8 md:p-12">
-            <div className="text-center py-16">
-              <div className="w-20 h-20 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
-                <span className="text-4xl">🚧</span>
+          {/* Tool Interface */}
+          {slug === "qr-generator" ? (
+            <QRCodeGenerator />
+          ) : (
+            <div className="clay-card p-8 md:p-12">
+              <div className="text-center py-16">
+                <div className="w-20 h-20 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
+                  <span className="text-4xl">🚧</span>
+                </div>
+                <h2 className="font-heading text-2xl font-semibold text-text mb-3">
+                  工具開發中
+                </h2>
+                <p className="font-body text-text/70 max-w-md mx-auto">
+                  這個工具正在開發中，敬請期待！
+                  <br />
+                  完成後將在這裡提供完整的功能介面。
+                </p>
               </div>
-              <h2 className="font-heading text-2xl font-semibold text-text mb-3">
-                工具開發中
-              </h2>
-              <p className="font-body text-text/70 max-w-md mx-auto">
-                這個工具正在開發中，敬請期待！
-                <br />
-                完成後將在這裡提供完整的功能介面。
-              </p>
             </div>
-          </div>
+          )}
         </div>
       </main>
       <Footer />
