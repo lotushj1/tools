@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import AgentationProvider from "@/components/AgentationProvider";
 
 export const metadata: Metadata = {
   title: "Vibe Coding Tools - 創意編碼小工具集合",
@@ -15,6 +16,7 @@ export default function RootLayout({
     <html lang="zh-TW">
       <body className="antialiased">
         {children}
+        <AgentationProvider />
       </body>
     </html>
   );
