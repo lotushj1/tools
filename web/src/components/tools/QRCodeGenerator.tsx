@@ -224,7 +224,7 @@ export default function QRCodeGenerator() {
           {qrDataUrl ? (
             <>
               {/* QR Code Image */}
-              <div className="p-4 bg-white rounded-2xl border-2 border-gray-800 mb-6">
+              <div className="p-4 bg-white rounded-2xl border-2 border-black mb-6">
                 <img
                   src={includeWhiteBg ? qrDataUrl : qrTransparentUrl || qrDataUrl}
                   alt="Generated QR Code"

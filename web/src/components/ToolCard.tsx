@@ -18,7 +18,7 @@ export default function ToolCard({
     <Link href={href} className="block">
       <article className="clay-card p-6 h-full flex flex-col">
         {/* Icon */}
-        <div className="w-14 h-14 rounded-2xl bg-primary flex items-center justify-center mb-4 border-2 border-gray-800 shadow-clay">
+        <div className="w-14 h-14 rounded-2xl bg-primary flex items-center justify-center mb-4 border-2 border-black shadow-clay">
           <Icon className="w-7 h-7 text-white" />
         </div>
 
