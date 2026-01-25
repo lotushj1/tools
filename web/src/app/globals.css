@@ -16,7 +16,7 @@
 
 @layer components {
   .clay-card {
-    @apply relative rounded-clay border-[3px] border-white/60 bg-background shadow-clay;
+    @apply relative rounded-clay border-[3px] border-gray-800 bg-white shadow-clay;
   }
 
   .clay-button {

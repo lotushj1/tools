@@ -99,7 +99,7 @@ export default function TextProcessor() {
           </div>
 
           {/* Facebook-style Post Preview */}
-          <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+          <div className="bg-white rounded-xl border-2 border-gray-800 overflow-hidden">
             {/* Post Header */}
             <div className="p-4 flex items-center gap-3 border-b border-gray-100">
               <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
