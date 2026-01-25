@@ -24,11 +24,11 @@
   }
 
   .clay-button-primary {
-    @apply clay-button bg-gradient-to-br from-cta to-blue-400 text-white shadow-[0_4px_12px_rgba(37,99,235,0.4),inset_0_1px_0_rgba(255,255,255,0.2)];
+    @apply clay-button bg-gradient-to-br from-cta to-blue-400 text-white;
   }
 
   .clay-button-secondary {
-    @apply clay-button bg-gradient-to-br from-primary to-secondary text-white shadow-[0_4px_12px_rgba(249,115,22,0.4),inset_0_1px_0_rgba(255,255,255,0.2)];
+    @apply clay-button bg-gradient-to-br from-primary to-secondary text-white;
   }
 }
 
