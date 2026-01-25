@@ -1,4 +1,4 @@
-import { Wrench, Github, Twitter } from "lucide-react";
+import { Wrench, User, Globe } from "lucide-react";
 import Link from "next/link";
 
 export default function Footer() {
@@ -18,28 +18,36 @@ export default function Footer() {
 
           {/* Copyright */}
           <p className="font-body text-sm text-text/60">
-            © {new Date().getFullYear()} Vibe Coding Tools. Made with Create Home
+            © {new Date().getFullYear()} Vibe Coding Tools. Made with{" "}
+            <a
+              href="https://creatorhome.tw/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-primary underline"
+            >
+              Create Home
+            </a>
           </p>
 
           {/* Social Links */}
           <div className="flex items-center gap-4">
             <a
-              href="https://github.com"
+              href="https://kevinlearn.com"
               target="_blank"
               rel="noopener noreferrer"
               className="w-10 h-10 rounded-xl bg-accent-light flex items-center justify-center"
-              aria-label="GitHub"
+              aria-label="個人連結"
             >
-              <Github className="w-5 h-5 text-text/70" />
+              <User className="w-5 h-5 text-text/70" />
             </a>
             <a
-              href="https://twitter.com"
+              href="https://creatorhome.tw/"
               target="_blank"
               rel="noopener noreferrer"
               className="w-10 h-10 rounded-xl bg-accent-light flex items-center justify-center"
-              aria-label="Twitter"
+              aria-label="官網"
             >
-              <Twitter className="w-5 h-5 text-text/70" />
+              <Globe className="w-5 h-5 text-text/70" />
             </a>
           </div>
         </div>
