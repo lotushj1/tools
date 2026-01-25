@@ -37,6 +37,7 @@ export default function Footer() {
               rel="noopener noreferrer"
               className="w-10 h-10 rounded-xl bg-accent-light flex items-center justify-center"
               aria-label="個人連結"
+              title="個人連結"
             >
               <User className="w-5 h-5 text-text/70" />
             </a>
@@ -46,6 +47,7 @@ export default function Footer() {
               rel="noopener noreferrer"
               className="w-10 h-10 rounded-xl bg-accent-light flex items-center justify-center"
               aria-label="官網"
+              title="Create Home 官網"
             >
               <Globe className="w-5 h-5 text-text/70" />
             </a>
