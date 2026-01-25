@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Type, Space, SplitSquareVertical, Sparkles, Trash2, Copy, Check } from "lucide-react";
+import { Type, Space, SplitSquareVertical, Sparkles, Trash2, Copy, Check, Eye, ThumbsUp, MessageCircle, Share2 } from "lucide-react";
 
 export default function TextProcessor() {
   const [text, setText] = useState("");
@@ -65,28 +65,88 @@ export default function TextProcessor() {
 
   return (
     <div className="space-y-6">
-      {/* Input Section */}
-      <div className="clay-card p-6">
-        <div className="flex items-center justify-between mb-3">
-          <label
-            htmlFor="text-input"
-            className="flex items-center gap-2 font-body font-semibold text-text"
-          >
-            <Type className="w-5 h-5 text-primary" />
-            輸入或貼上文字
-          </label>
-          <div className="font-body text-sm text-text/60">
-            共 <span className="font-semibold text-primary">{charCount}</span> 字
-            （不含空白 <span className="font-semibold text-primary">{charCountNoSpaces}</span> 字）
+      {/* Input and Preview Side by Side */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Input Section */}
+        <div className="clay-card p-6">
+          <div className="flex items-center justify-between mb-3">
+            <label
+              htmlFor="text-input"
+              className="flex items-center gap-2 font-body font-semibold text-text"
+            >
+              <Type className="w-5 h-5 text-primary" />
+              輸入或貼上文字
+            </label>
+            <div className="font-body text-sm text-text/60">
+              共 <span className="font-semibold text-primary">{charCount}</span> 字
+              （不含空白 <span className="font-semibold text-primary">{charCountNoSpaces}</span> 字）
+            </div>
+          </div>
+          <textarea
+            id="text-input"
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            placeholder="在此輸入或貼上文字..."
+            className="w-full h-80 px-4 py-3 rounded-xl border-2 border-primary/20 bg-white font-body text-text placeholder:text-text/40 focus:outline-none focus:border-primary resize-none"
+          />
+        </div>
+
+        {/* Preview Section - Social Media Style */}
+        <div className="clay-card p-6">
+          <div className="flex items-center gap-2 mb-3">
+            <Eye className="w-5 h-5 text-primary" />
+            <span className="font-body font-semibold text-text">社群貼文預覽</span>
+          </div>
+
+          {/* Facebook-style Post Preview */}
+          <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+            {/* Post Header */}
+            <div className="p-4 flex items-center gap-3 border-b border-gray-100">
+              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
+                <span className="text-white font-bold text-sm">You</span>
+              </div>
+              <div>
+                <p className="font-semibold text-gray-900 text-sm">Your Name</p>
+                <p className="text-xs text-gray-500">剛剛 · 🌐</p>
+              </div>
+            </div>
+
+            {/* Post Content */}
+            <div className="p-4 min-h-[200px] max-h-[280px] overflow-y-auto">
+              {text ? (
+                <p className="font-body text-gray-900 text-[15px] leading-relaxed whitespace-pre-wrap break-words">
+                  {text}
+                </p>
+              ) : (
+                <p className="text-gray-400 text-[15px]">輸入文字後，這裡會顯示貼文預覽...</p>
+              )}
+            </div>
+
+            {/* Post Footer - Engagement */}
+            <div className="px-4 py-2 border-t border-gray-100">
+              <div className="flex items-center justify-between text-gray-500 text-sm">
+                <span>👍 0</span>
+                <span>0 則留言</span>
+              </div>
+            </div>
+
+            {/* Post Actions */}
+            <div className="px-2 py-1 border-t border-gray-100 flex">
+              <button className="flex-1 flex items-center justify-center gap-2 py-2 text-gray-600 text-sm font-medium rounded-lg">
+                <ThumbsUp className="w-5 h-5" />
+                讚
+              </button>
+              <button className="flex-1 flex items-center justify-center gap-2 py-2 text-gray-600 text-sm font-medium rounded-lg">
+                <MessageCircle className="w-5 h-5" />
+                留言
+              </button>
+              <button className="flex-1 flex items-center justify-center gap-2 py-2 text-gray-600 text-sm font-medium rounded-lg">
+                <Share2 className="w-5 h-5" />
+                分享
+              </button>
+            </div>
           </div>
         </div>
-        <textarea
-          id="text-input"
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-          placeholder="在此輸入或貼上文字..."
-          className="w-full h-64 px-4 py-3 rounded-xl border-2 border-primary/20 bg-white font-body text-text placeholder:text-text/40 focus:outline-none focus:border-primary resize-none"
-        />
       </div>
 
       {/* Action Buttons */}
