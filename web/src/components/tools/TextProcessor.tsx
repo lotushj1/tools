@@ -22,11 +22,10 @@ export default function TextProcessor() {
     return result;
   };
 
-  // Add special blank character between lines
+  // Add special blank character at line breaks
   const addBlankBetweenLines = (input: string): string => {
-    // Split by newlines, add blank character, rejoin
-    const lines = input.split("\n");
-    return lines.join("\n󠀠\n");
+    // Replace newlines with blank character + newline
+    return input.replace(/\n/g, "󠀠\n");
   };
 
   // Handle add space between CJK and Latin
