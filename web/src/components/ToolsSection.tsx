@@ -1,4 +1,4 @@
-import { QrCode } from "lucide-react";
+import { QrCode, Type } from "lucide-react";
 import ToolCard from "./ToolCard";
 
 const tools = [
@@ -7,6 +7,12 @@ const tools = [
     description: "將任意文字或網址轉換為 QR Code，支援自訂樣式與下載",
     icon: QrCode,
     href: "/tools/qr-generator",
+  },
+  {
+    title: "文字處理工具",
+    description: "字數計算、中英加空格、行間加空白，一鍵完成文字排版",
+    icon: Type,
+    href: "/tools/text-processor",
   },
 ];
 
