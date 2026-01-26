@@ -9,8 +9,7 @@ import {
   Play,
   RotateCcw,
   Upload,
-  FileText,
-  X
+  FileText
 } from "lucide-react";
 
 interface Winner {
@@ -166,12 +165,8 @@ export default function LotteryMachine() {
                   <div
                     key={idx}
                     className={`w-5 h-5 rounded-full ${ballColors[idx % ballColors.length]} ${
-                      ballAnimation ? "animate-bounce" : ""
+                      ballAnimation ? "animate-pulse" : ""
                     } border border-black/20 shadow-sm`}
-                    style={{
-                      animationDelay: `${idx * 0.05}s`,
-                      animationDuration: "0.3s"
-                    }}
                   />
                 ))}
                 {participants.length === 0 && (
