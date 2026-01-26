@@ -48,7 +48,7 @@ export default function InstagramGiveaway() {
     }
 
     // Remove duplicates
-    return [...new Set(participants)];
+    return Array.from(new Set(participants));
   };
 
   const participants = getParticipants();
