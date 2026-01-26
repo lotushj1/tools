@@ -25,6 +25,11 @@ const SpinWheel = dynamic(
   { ssr: false }
 );
 
+const PomodoroTimer = dynamic(
+  () => import("@/components/tools/PomodoroTimer"),
+  { ssr: false }
+);
+
 // Tool data - in a real app, this would come from a database or API
 const toolsData: Record<string, { title: string; description: string }> = {
   "qr-generator": {
@@ -42,6 +47,10 @@ const toolsData: Record<string, { title: string; description: string }> = {
   "spin-wheel": {
     title: "幸運輪盤",
     description: "自訂輪盤選項，轉動輪盤隨機抽選，支援手動或自動停止",
+  },
+  "pomodoro": {
+    title: "番茄鐘",
+    description: "專注工作法計時器，自訂專注與休息時間，提升工作效率",
   },
 };
 
@@ -99,6 +108,7 @@ export default async function ToolPage({
           {slug === "text-processor" && <TextProcessor />}
           {slug === "lottery" && <LotteryMachine />}
           {slug === "spin-wheel" && <SpinWheel />}
+          {slug === "pomodoro" && <PomodoroTimer />}
         </div>
       </main>
       <Footer />
