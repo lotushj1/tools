@@ -1,4 +1,4 @@
-import { QrCode, Type } from "lucide-react";
+import { QrCode, Type, Gift } from "lucide-react";
 import ToolCard from "./ToolCard";
 
 const tools = [
@@ -13,6 +13,12 @@ const tools = [
     description: "字數計算、中英加空格、行間加空白，一鍵完成文字排版",
     icon: Type,
     href: "/tools/text-processor",
+  },
+  {
+    title: "IG 抽獎工具",
+    description: "貼上留言名單、設定條件，精美拉霸動畫抽出幸運兒",
+    icon: Gift,
+    href: "/tools/ig-giveaway",
   },
 ];
 
