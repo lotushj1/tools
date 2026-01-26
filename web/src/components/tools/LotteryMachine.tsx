@@ -25,16 +25,35 @@ export default function LotteryMachine() {
   const [showResult, setShowResult] = useState(false);
   const [currentBall, setCurrentBall] = useState<string | null>(null);
   const [ballAnimation, setBallAnimation] = useState(false);
+  const [rollingNames, setRollingNames] = useState<string[]>([]);
 
-  // Parse participants from text
+  // Parse participants from text (support both newline and comma separated)
   const getParticipants = (): string[] => {
     if (!participantsText.trim()) return [];
 
-    // Split by newlines and filter empty lines
-    const participants = participantsText
-      .split("\n")
-      .map((line) => line.trim())
-      .filter((line) => line.length > 0);
+    // Split by newlines first, then by commas
+    const participants: string[] = [];
+    const lines = participantsText.split("\n");
+
+    lines.forEach(line => {
+      // Check if line contains commas
+      if (line.includes(",")) {
+        // Split by comma
+        const parts = line.split(",");
+        parts.forEach(part => {
+          const name = part.trim();
+          if (name.length > 0) {
+            participants.push(name);
+          }
+        });
+      } else {
+        // Single name per line
+        const name = line.trim();
+        if (name.length > 0) {
+          participants.push(name);
+        }
+      }
+    });
 
     // Remove duplicates
     return Array.from(new Set(participants));
@@ -86,21 +105,35 @@ export default function LotteryMachine() {
     setShowResult(false);
     setWinners([]);
     setBallAnimation(true);
+    setRollingNames([]);
 
     const selectedWinners: Winner[] = [];
     const availableParticipants = [...participants];
 
     // Draw winners one by one
     for (let i = 0; i < winnerCount; i++) {
-      // Animate ball spinning
-      const spinDuration = 2000;
-      const spinInterval = 80;
-      const spins = spinDuration / spinInterval;
+      // Animate rolling names
+      const spinDuration = 2500;
+      const startInterval = 50;
+      const endInterval = 200;
+      let elapsed = 0;
 
-      for (let j = 0; j < spins; j++) {
-        const randomIdx = Math.floor(Math.random() * availableParticipants.length);
-        setCurrentBall(availableParticipants[randomIdx]);
-        await new Promise(resolve => setTimeout(resolve, spinInterval + j * 3));
+      while (elapsed < spinDuration) {
+        // Calculate current interval (slows down over time)
+        const progress = elapsed / spinDuration;
+        const currentInterval = startInterval + (endInterval - startInterval) * progress;
+
+        // Pick 5 random names for the rolling display
+        const rolling: string[] = [];
+        for (let k = 0; k < 5; k++) {
+          const randomIdx = Math.floor(Math.random() * availableParticipants.length);
+          rolling.push(availableParticipants[randomIdx]);
+        }
+        setRollingNames(rolling);
+        setCurrentBall(rolling[2]); // Middle one is the "selected"
+
+        await new Promise(resolve => setTimeout(resolve, currentInterval));
+        elapsed += currentInterval;
       }
 
       // Select winner
@@ -108,17 +141,19 @@ export default function LotteryMachine() {
       const winner = availableParticipants[winnerIdx];
       selectedWinners.push({ name: winner, index: i });
       setCurrentBall(winner);
+      setRollingNames([winner]);
 
       // Remove winner from pool
       availableParticipants.splice(winnerIdx, 1);
 
       // Pause between draws
       if (i < winnerCount - 1) {
-        await new Promise(resolve => setTimeout(resolve, 800));
+        await new Promise(resolve => setTimeout(resolve, 1000));
       }
     }
 
     setBallAnimation(false);
+    setRollingNames([]);
     setWinners(selectedWinners);
     setIsDrawing(false);
     setShowResult(true);
@@ -158,60 +193,66 @@ export default function LotteryMachine() {
           {/* Machine Top */}
           <div className="relative">
             {/* Glass dome */}
-            <div className="relative w-64 h-48 rounded-t-full bg-gradient-to-b from-white/80 to-white/40 border-4 border-black overflow-hidden">
+            <div className="relative w-72 h-52 rounded-t-[50%] bg-gradient-to-b from-sky-100 to-sky-50 border-4 border-black overflow-hidden">
               {/* Balls inside */}
-              <div className="absolute inset-4 flex flex-wrap justify-center items-center gap-1 overflow-hidden">
-                {participants.slice(0, 30).map((_, idx) => (
+              <div className="absolute inset-3 bottom-6 flex flex-wrap justify-center content-center gap-1.5 overflow-hidden p-2">
+                {participants.slice(0, 35).map((_, idx) => (
                   <div
                     key={idx}
-                    className={`w-5 h-5 rounded-full ${ballColors[idx % ballColors.length]} ${
-                      ballAnimation ? "animate-pulse" : ""
-                    } border border-black/20 shadow-sm`}
+                    className={`w-6 h-6 rounded-full ${ballColors[idx % ballColors.length]} ${
+                      ballAnimation ? "animate-bounce" : ""
+                    } border-2 border-white/50 shadow-md`}
                   />
                 ))}
                 {participants.length === 0 && (
-                  <p className="text-text/40 text-sm font-body text-center">
+                  <p className="text-gray-400 text-sm font-body text-center px-4">
                     請在下方輸入參與者名單
                   </p>
                 )}
               </div>
 
               {/* Shine effect */}
-              <div className="absolute top-4 left-8 w-16 h-8 bg-white/60 rounded-full blur-md transform -rotate-45" />
+              <div className="absolute top-6 left-10 w-20 h-10 bg-white/70 rounded-full blur-lg transform -rotate-45" />
             </div>
 
             {/* Machine base */}
-            <div className="relative w-64 h-24 bg-gradient-to-b from-primary to-primary/80 border-4 border-black border-t-0 rounded-b-3xl">
-              {/* Output chute */}
-              <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-20 h-12 bg-gray-800 rounded-t-xl border-4 border-black border-b-0">
-                {/* Ball output */}
-                {(currentBall || showResult) && (
-                  <div className="absolute -top-8 left-1/2 -translate-x-1/2 w-14 h-14 rounded-full bg-gradient-to-br from-yellow-400 to-orange-500 border-4 border-black flex items-center justify-center shadow-lg animate-bounce">
-                    <span className="text-white text-xs font-bold">!</span>
+            <div className="relative w-72 h-28 bg-gradient-to-b from-primary to-orange-600 border-4 border-black border-t-0 rounded-b-3xl">
+              {/* Rolling display window */}
+              <div className="absolute top-2 left-1/2 -translate-x-1/2 w-48 h-16 bg-gray-900 rounded-lg border-2 border-black overflow-hidden">
+                {isDrawing && rollingNames.length > 0 ? (
+                  <div className="h-full flex flex-col justify-center items-center animate-pulse">
+                    {rollingNames.slice(0, 3).map((name, idx) => (
+                      <div
+                        key={idx}
+                        className={`text-center font-heading truncate w-full px-2 ${
+                          idx === 1 ? "text-yellow-400 text-lg font-bold" : "text-gray-500 text-xs"
+                        }`}
+                      >
+                        {name}
+                      </div>
+                    ))}
+                  </div>
+                ) : showResult && currentBall ? (
+                  <div className="h-full flex items-center justify-center">
+                    <span className="text-yellow-400 font-heading text-lg font-bold truncate px-2">
+                      🎉 {currentBall}
+                    </span>
+                  </div>
+                ) : (
+                  <div className="h-full flex items-center justify-center">
+                    <span className="text-gray-600 font-body text-sm">準備抽獎</span>
                   </div>
                 )}
               </div>
 
-              {/* Decorative elements */}
-              <div className="absolute top-3 left-4 w-3 h-3 rounded-full bg-yellow-400 border border-black" />
-              <div className="absolute top-3 right-4 w-3 h-3 rounded-full bg-yellow-400 border border-black" />
-              <div className="absolute top-3 left-1/2 -translate-x-1/2">
-                <span className="font-heading text-white text-sm font-bold tracking-wider">LUCKY</span>
+              {/* Decorative lights */}
+              <div className="absolute bottom-3 left-4 w-3 h-3 rounded-full bg-green-400 border border-black animate-pulse" />
+              <div className="absolute bottom-3 right-4 w-3 h-3 rounded-full bg-red-400 border border-black animate-pulse" />
+              <div className="absolute bottom-3 left-1/2 -translate-x-1/2">
+                <span className="font-heading text-white text-xs font-bold tracking-widest">LUCKY DRAW</span>
               </div>
             </div>
           </div>
-
-          {/* Current Winner Display */}
-          {(isDrawing || showResult) && currentBall && (
-            <div className="mt-6 p-4 bg-gradient-to-r from-yellow-100 to-orange-100 rounded-xl border-2 border-black min-w-[250px]">
-              <p className="text-center font-body text-sm text-text/70 mb-1">
-                {isDrawing ? "抽選中..." : "🎉 恭喜中獎！"}
-              </p>
-              <p className={`text-center font-heading text-xl font-bold text-text ${isDrawing ? "blur-[1px]" : ""}`}>
-                {currentBall}
-              </p>
-            </div>
-          )}
 
           {/* Action Buttons */}
           <div className="flex flex-wrap justify-center gap-3 mt-6">
@@ -283,7 +324,7 @@ export default function LotteryMachine() {
         <textarea
           value={participantsText}
           onChange={(e) => setParticipantsText(e.target.value)}
-          placeholder="每行輸入一位參與者名稱&#10;例如：&#10;王小明&#10;李小華&#10;張小美"
+          placeholder="輸入參與者名稱（換行或逗號分隔皆可）&#10;例如：&#10;王小明, 李小華, 張小美&#10;或&#10;王小明&#10;李小華&#10;張小美"
           className="w-full h-48 px-4 py-3 rounded-xl border-2 border-primary/20 bg-white font-body text-text placeholder:text-text/40 focus:outline-none focus:border-primary resize-none"
         />
 
