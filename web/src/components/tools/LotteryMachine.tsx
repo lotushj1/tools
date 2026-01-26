@@ -31,32 +31,16 @@ export default function LotteryMachine() {
   const getParticipants = (): string[] => {
     if (!participantsText.trim()) return [];
 
-    // Split by newlines first, then by commas
-    const participants: string[] = [];
-    const lines = participantsText.split("\n");
-
-    lines.forEach(line => {
-      // Check if line contains commas
-      if (line.includes(",")) {
-        // Split by comma
-        const parts = line.split(",");
-        parts.forEach(part => {
-          const name = part.trim();
-          if (name.length > 0) {
-            participants.push(name);
-          }
-        });
-      } else {
-        // Single name per line
-        const name = line.trim();
-        if (name.length > 0) {
-          participants.push(name);
-        }
-      }
-    });
+    // Support multiple separators: newline, comma (English & Chinese), semicolon
+    // First replace all separators with newline, then split
+    const normalized = participantsText
+      .replace(/[,，;；、]/g, "\n")  // Replace commas and semicolons with newline
+      .split("\n")
+      .map(name => name.trim())
+      .filter(name => name.length > 0);
 
     // Remove duplicates
-    return Array.from(new Set(participants));
+    return Array.from(new Set(normalized));
   };
 
   const participants = getParticipants();
@@ -324,7 +308,7 @@ export default function LotteryMachine() {
         <textarea
           value={participantsText}
           onChange={(e) => setParticipantsText(e.target.value)}
-          placeholder="輸入參與者名稱（換行或逗號分隔皆可）&#10;例如：&#10;王小明, 李小華, 張小美&#10;或&#10;王小明&#10;李小華&#10;張小美"
+          placeholder="輸入參與者名稱&#10;支援：換行、逗號(,)、中文逗號(，)、頓號(、)分隔&#10;例如：王小明, 李小華, 張小美&#10;或：王小明、李小華、張小美"
           className="w-full h-48 px-4 py-3 rounded-xl border-2 border-primary/20 bg-white font-body text-text placeholder:text-text/40 focus:outline-none focus:border-primary resize-none"
         />
 
