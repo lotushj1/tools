@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 import {
   Instagram,
   Users,
@@ -28,7 +28,6 @@ export default function InstagramGiveaway() {
   const [isDrawing, setIsDrawing] = useState(false);
   const [showResult, setShowResult] = useState(false);
   const [currentSlotNames, setCurrentSlotNames] = useState<string[]>([]);
-  const slotRef = useRef<HTMLDivElement>(null);
 
   // Parse participants from text
   const getParticipants = (): string[] => {
@@ -201,10 +200,7 @@ export default function InstagramGiveaway() {
             </div>
 
             {/* Main slot display */}
-            <div
-              ref={slotRef}
-              className="relative bg-gradient-to-b from-gray-900 to-gray-800 rounded-2xl p-6 border-4 border-black shadow-clay overflow-hidden min-w-[300px]"
-            >
+            <div className="relative bg-gradient-to-b from-gray-900 to-gray-800 rounded-2xl p-6 border-4 border-black shadow-clay overflow-hidden min-w-[300px]">
               {/* Slot windows */}
               <div className="space-y-3">
                 {(showResult || isDrawing) ? (
@@ -242,9 +238,9 @@ export default function InstagramGiveaway() {
 
               {/* Decorative lights */}
               <div className="absolute top-2 left-2 w-3 h-3 rounded-full bg-red-500 animate-pulse" />
-              <div className="absolute top-2 right-2 w-3 h-3 rounded-full bg-green-500 animate-pulse" style={{ animationDelay: "0.5s" }} />
-              <div className="absolute bottom-2 left-2 w-3 h-3 rounded-full bg-yellow-500 animate-pulse" style={{ animationDelay: "0.25s" }} />
-              <div className="absolute bottom-2 right-2 w-3 h-3 rounded-full bg-blue-500 animate-pulse" style={{ animationDelay: "0.75s" }} />
+              <div className="absolute top-2 right-2 w-3 h-3 rounded-full bg-green-500 animate-pulse [animation-delay:0.5s]" />
+              <div className="absolute bottom-2 left-2 w-3 h-3 rounded-full bg-yellow-500 animate-pulse [animation-delay:0.25s]" />
+              <div className="absolute bottom-2 right-2 w-3 h-3 rounded-full bg-blue-500 animate-pulse [animation-delay:0.75s]" />
             </div>
           </div>
 
