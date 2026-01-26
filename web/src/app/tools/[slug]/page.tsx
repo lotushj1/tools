@@ -15,8 +15,8 @@ const TextProcessor = dynamic(
   { ssr: false }
 );
 
-const InstagramGiveaway = dynamic(
-  () => import("@/components/tools/InstagramGiveaway"),
+const LotteryMachine = dynamic(
+  () => import("@/components/tools/LotteryMachine"),
   { ssr: false }
 );
 
@@ -30,9 +30,9 @@ const toolsData: Record<string, { title: string; description: string }> = {
     title: "文字處理工具",
     description: "字數計算、中英加空格、行間加空白，一鍵完成文字排版",
   },
-  "ig-giveaway": {
-    title: "IG 抽獎工具",
-    description: "貼上留言名單、設定條件，精美拉霸動畫抽出幸運兒",
+  "lottery": {
+    title: "抽獎扭蛋機",
+    description: "輸入名單或匯入 CSV，扭蛋機動畫抽出幸運得獎者",
   },
 };
 
@@ -88,7 +88,7 @@ export default async function ToolPage({
           {/* Tool Interface */}
           {slug === "qr-generator" && <QRCodeGenerator />}
           {slug === "text-processor" && <TextProcessor />}
-          {slug === "ig-giveaway" && <InstagramGiveaway />}
+          {slug === "lottery" && <LotteryMachine />}
         </div>
       </main>
       <Footer />

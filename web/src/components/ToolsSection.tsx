@@ -15,10 +15,10 @@ const tools = [
     href: "/tools/text-processor",
   },
   {
-    title: "IG 抽獎工具",
-    description: "貼上留言名單、設定條件，精美拉霸動畫抽出幸運兒",
+    title: "抽獎扭蛋機",
+    description: "輸入名單或匯入 CSV，扭蛋機動畫抽出幸運得獎者",
     icon: Gift,
-    href: "/tools/ig-giveaway",
+    href: "/tools/lottery",
   },
 ];
 
