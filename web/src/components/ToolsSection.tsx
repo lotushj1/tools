@@ -1,4 +1,4 @@
-import { QrCode, Type, Gift } from "lucide-react";
+import { QrCode, Type, Gift, Circle } from "lucide-react";
 import ToolCard from "./ToolCard";
 
 const tools = [
@@ -19,6 +19,12 @@ const tools = [
     description: "輸入名單或匯入 CSV，扭蛋機動畫抽出幸運得獎者",
     icon: Gift,
     href: "/tools/lottery",
+  },
+  {
+    title: "幸運輪盤",
+    description: "自訂輪盤選項，轉動輪盤隨機抽選，支援手動或自動停止",
+    icon: Circle,
+    href: "/tools/spin-wheel",
   },
 ];
 

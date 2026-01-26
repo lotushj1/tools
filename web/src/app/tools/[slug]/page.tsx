@@ -20,6 +20,11 @@ const LotteryMachine = dynamic(
   { ssr: false }
 );
 
+const SpinWheel = dynamic(
+  () => import("@/components/tools/SpinWheel"),
+  { ssr: false }
+);
+
 // Tool data - in a real app, this would come from a database or API
 const toolsData: Record<string, { title: string; description: string }> = {
   "qr-generator": {
@@ -33,6 +38,10 @@ const toolsData: Record<string, { title: string; description: string }> = {
   "lottery": {
     title: "抽獎扭蛋機",
     description: "輸入名單或匯入 CSV，扭蛋機動畫抽出幸運得獎者",
+  },
+  "spin-wheel": {
+    title: "幸運輪盤",
+    description: "自訂輪盤選項，轉動輪盤隨機抽選，支援手動或自動停止",
   },
 };
 
@@ -89,6 +98,7 @@ export default async function ToolPage({
           {slug === "qr-generator" && <QRCodeGenerator />}
           {slug === "text-processor" && <TextProcessor />}
           {slug === "lottery" && <LotteryMachine />}
+          {slug === "spin-wheel" && <SpinWheel />}
         </div>
       </main>
       <Footer />
