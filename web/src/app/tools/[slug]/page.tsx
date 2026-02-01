@@ -30,6 +30,11 @@ const PomodoroTimer = dynamic(
   { ssr: false }
 );
 
+const CountdownTimer = dynamic(
+  () => import("@/components/tools/CountdownTimer"),
+  { ssr: false }
+);
+
 // Tool data - in a real app, this would come from a database or API
 const toolsData: Record<string, { title: string; description: string }> = {
   "qr-generator": {
@@ -51,6 +56,10 @@ const toolsData: Record<string, { title: string; description: string }> = {
   "pomodoro": {
     title: "番茄鐘",
     description: "專注工作法計時器，自訂專注與休息時間，提升工作效率",
+  },
+  "countdown": {
+    title: "倒數計時器",
+    description: "設定日期倒數計時，產生嵌入程式碼，適用於商品販售與募資活動",
   },
 };
 
@@ -109,6 +118,7 @@ export default async function ToolPage({
           {slug === "lottery" && <LotteryMachine />}
           {slug === "spin-wheel" && <SpinWheel />}
           {slug === "pomodoro" && <PomodoroTimer />}
+          {slug === "countdown" && <CountdownTimer />}
         </div>
       </main>
       <Footer />

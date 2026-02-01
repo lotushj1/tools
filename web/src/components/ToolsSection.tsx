@@ -1,4 +1,4 @@
-import { QrCode, Type, Gift, Circle, Timer } from "lucide-react";
+import { QrCode, Type, Gift, Circle, Timer, Hourglass } from "lucide-react";
 import ToolCard from "./ToolCard";
 
 const tools = [
@@ -31,6 +31,12 @@ const tools = [
     description: "專注工作法計時器，自訂專注與休息時間，提升工作效率",
     icon: Timer,
     href: "/tools/pomodoro",
+  },
+  {
+    title: "倒數計時器",
+    description: "設定日期倒數，產生嵌入程式碼，適用商品販售與募資活動",
+    icon: Hourglass,
+    href: "/tools/countdown",
   },
 ];
 
