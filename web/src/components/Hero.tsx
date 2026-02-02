@@ -1,6 +1,11 @@
+"use client";
+
 import { Sparkles, Rocket } from "lucide-react";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 export default function Hero() {
+  const { t } = useLanguage();
+
   return (
     <section className="relative py-20 md:py-32 overflow-hidden">
       {/* Background Decorations */}
@@ -15,33 +20,33 @@ export default function Hero() {
         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent-light border-2 border-primary/20 mb-8">
           <Sparkles className="w-4 h-4 text-primary" />
           <span className="font-body text-sm font-medium text-text">
-            免費實用小工具
+            {t("hero.badge")}
           </span>
         </div>
 
         {/* Main Heading */}
         <h1 className="text-4xl md:text-6xl font-heading font-bold text-text mb-6 text-balance">
-          免費好用的
+          {t("hero.title1")}
           <span className="block mt-2 text-primary">
-            實用小工具集
+            {t("hero.title2")}
           </span>
         </h1>
 
         {/* Subtitle */}
         <p className="text-lg md:text-xl font-body text-text/70 mb-10 max-w-2xl mx-auto text-balance">
-          這是我透過 Vibe Coding 製作的各種實用小工具。
+          {t("hero.subtitle1")}
           <br className="hidden md:block" />
-          完全免費、即開即用、簡單好上手。
+          {t("hero.subtitle2")}
         </p>
 
         {/* CTA Buttons */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <button className="clay-button-primary text-lg px-8 py-4">
             <Rocket className="w-5 h-5" />
-            開始探索
+            {t("hero.cta")}
           </button>
           <button className="clay-button bg-white/50 border-2 border-primary/20 text-text px-8 py-4">
-            查看所有工具
+            {t("hero.viewAll")}
           </button>
         </div>
 
@@ -49,15 +54,15 @@ export default function Hero() {
         <div className="mt-16 grid grid-cols-3 gap-8 max-w-md mx-auto">
           <div className="text-center">
             <div className="font-heading text-3xl font-bold text-primary">10+</div>
-            <div className="font-body text-sm text-text/60">實用工具</div>
+            <div className="font-body text-sm text-text/60">{t("hero.statTools")}</div>
           </div>
           <div className="text-center">
             <div className="font-heading text-3xl font-bold text-primary">Free</div>
-            <div className="font-body text-sm text-text/60">免費使用</div>
+            <div className="font-body text-sm text-text/60">{t("hero.statFree")}</div>
           </div>
           <div className="text-center">
             <div className="font-heading text-3xl font-bold text-primary">Fast</div>
-            <div className="font-body text-sm text-text/60">即開即用</div>
+            <div className="font-body text-sm text-text/60">{t("hero.statFast")}</div>
           </div>
         </div>
       </div>

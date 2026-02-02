@@ -3,8 +3,10 @@
 import { useState, useEffect } from "react";
 import { Download, Link as LinkIcon, Copy, Check } from "lucide-react";
 import QRCode from "qrcode";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 export default function QRCodeGenerator() {
+  const { t } = useLanguage();
   const [url, setUrl] = useState("");
   const [qrColor, setQrColor] = useState("#9A3412");
   const [hexInput, setHexInput] = useState("#9A3412");
@@ -111,7 +113,7 @@ export default function QRCodeGenerator() {
         setCopied(true);
         setTimeout(() => setCopied(false), 2000);
       } catch {
-        alert("複製失敗，請手動右鍵複製圖片");
+        alert(t("qr.copyFailed"));
       }
     }
   };
@@ -175,7 +177,7 @@ export default function QRCodeGenerator() {
           className="flex items-center gap-2 font-body font-semibold text-text mb-3"
         >
           <LinkIcon className="w-5 h-5 text-primary" />
-          輸入網址或文字
+          {t("qr.inputLabel")}
         </label>
         <input
           id="url-input"
@@ -190,7 +192,7 @@ export default function QRCodeGenerator() {
 
       {/* Color Settings */}
       <div className="clay-card p-6">
-        <p className="font-body font-semibold text-text mb-3">QR Code 顏色</p>
+        <p className="font-body font-semibold text-text mb-3">{t("qr.colorLabel")}</p>
         <div className="flex items-center gap-4">
           {/* Color Picker */}
           <input
@@ -198,7 +200,7 @@ export default function QRCodeGenerator() {
             value={qrColor}
             onChange={handleColorPickerChange}
             className="w-12 h-12 rounded-lg cursor-pointer border-2 border-gray-200"
-            aria-label="選擇顏色"
+            aria-label={t("qr.pickColor")}
           />
           {/* Hex Input */}
           <input
@@ -208,7 +210,7 @@ export default function QRCodeGenerator() {
             placeholder="#000000"
             className="w-28 px-3 py-2 rounded-lg border-2 border-gray-200 bg-white font-body text-text text-center uppercase focus:outline-none focus:border-primary"
             maxLength={7}
-            aria-label="輸入色碼"
+            aria-label={t("qr.hexInput")}
           />
           {/* Preview */}
           <div
@@ -243,7 +245,7 @@ export default function QRCodeGenerator() {
                   className="w-4 h-4 rounded border-gray-300 text-primary focus:ring-primary"
                 />
                 <span className="font-body text-text/70 text-sm">
-                  包含白色背景
+                  {t("qr.whiteBg")}
                 </span>
               </label>
 
@@ -255,17 +257,17 @@ export default function QRCodeGenerator() {
                     ? "border-primary bg-primary/10 text-primary"
                     : "border-gray-300 bg-white text-text"
                 }`}
-                aria-label="複製 QR Code"
+                aria-label={t("qr.copyQr")}
               >
                 {copied ? (
                   <>
                     <Check className="w-5 h-5" />
-                    已複製！
+                    {t("qr.copied")}
                   </>
                 ) : (
                   <>
                     <Copy className="w-5 h-5" />
-                    複製圖片
+                    {t("qr.copyImage")}
                   </>
                 )}
               </button>
@@ -275,7 +277,7 @@ export default function QRCodeGenerator() {
                 <button
                   onClick={downloadPNG}
                   className="inline-flex items-center gap-2 px-5 py-3 rounded-xl border-2 border-gray-300 bg-white text-text font-body font-semibold"
-                  aria-label="下載 PNG 格式"
+                  aria-label={t("qr.downloadPng")}
                 >
                   PNG
                   <Download className="w-4 h-4" />
@@ -284,7 +286,7 @@ export default function QRCodeGenerator() {
                 <button
                   onClick={downloadJPG}
                   className="inline-flex items-center gap-2 px-5 py-3 rounded-xl border-2 border-gray-300 bg-white text-text font-body font-semibold"
-                  aria-label="下載 JPG 格式"
+                  aria-label={t("qr.downloadJpg")}
                 >
                   JPG
                   <Download className="w-4 h-4" />
@@ -293,7 +295,7 @@ export default function QRCodeGenerator() {
                 <button
                   onClick={downloadSVG}
                   className="inline-flex items-center gap-2 px-5 py-3 rounded-xl border-2 border-gray-300 bg-white text-text font-body font-semibold"
-                  aria-label="下載 SVG 格式"
+                  aria-label={t("qr.downloadSvg")}
                 >
                   SVG
                   <Download className="w-4 h-4" />
@@ -306,7 +308,7 @@ export default function QRCodeGenerator() {
                 <LinkIcon className="w-12 h-12 text-primary/40" />
               </div>
               <p className="font-body text-text/50">
-                輸入網址後，QR Code 將在這裡顯示
+                {t("qr.placeholder")}
               </p>
             </div>
           )}

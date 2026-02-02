@@ -11,6 +11,7 @@ import {
   Upload,
   FileText
 } from "lucide-react";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 interface Winner {
   name: string;
@@ -18,6 +19,7 @@ interface Winner {
 }
 
 export default function LotteryMachine() {
+  const { t } = useLanguage();
   const [participantsText, setParticipantsText] = useState("");
   const [winnerCount, setWinnerCount] = useState(1);
   const [winners, setWinners] = useState<Winner[]>([]);
@@ -190,7 +192,7 @@ export default function LotteryMachine() {
                 ))}
                 {participants.length === 0 && (
                   <p className="text-gray-400 text-sm font-body text-center px-4">
-                    請在下方輸入參與者名單
+                    {t("lottery.readyPrompt")}
                   </p>
                 )}
               </div>
@@ -224,7 +226,7 @@ export default function LotteryMachine() {
                   </div>
                 ) : (
                   <div className="h-full flex items-center justify-center">
-                    <span className="text-gray-600 font-body text-sm">準備抽獎</span>
+                    <span className="text-gray-600 font-body text-sm">{t("lottery.ready")}</span>
                   </div>
                 )}
               </div>
@@ -248,12 +250,12 @@ export default function LotteryMachine() {
               {isDrawing ? (
                 <>
                   <Sparkles className="w-5 h-5 animate-spin" />
-                  抽獎中...
+                  {t("lottery.drawing")}
                 </>
               ) : (
                 <>
                   <Play className="w-5 h-5" />
-                  開始抽獎
+                  {t("lottery.startDraw")}
                 </>
               )}
             </button>
@@ -264,7 +266,7 @@ export default function LotteryMachine() {
                 className="inline-flex items-center gap-2 px-6 py-4 rounded-2xl border-2 border-black bg-white text-text font-body font-semibold"
               >
                 <RotateCcw className="w-5 h-5" />
-                重新抽獎
+                {t("lottery.redraw")}
               </button>
             )}
           </div>
@@ -276,10 +278,10 @@ export default function LotteryMachine() {
         <div className="flex items-center justify-between mb-3">
           <label className="flex items-center gap-2 font-body font-semibold text-text">
             <Users className="w-5 h-5 text-primary" />
-            參與者名單
+            {t("lottery.listTitle")}
           </label>
           <span className="font-body text-sm text-text/60">
-            共 <span className="font-semibold text-primary">{participants.length}</span> 位
+            {t("lottery.totalPrefix")} <span className="font-semibold text-primary">{participants.length}</span> {t("lottery.totalSuffix")}
           </span>
         </div>
 
@@ -287,7 +289,7 @@ export default function LotteryMachine() {
         <div className="flex gap-2 mb-3">
           <label className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border-2 border-primary/30 bg-primary/5 text-primary font-body font-medium cursor-pointer">
             <Upload className="w-4 h-4" />
-            匯入 CSV
+            {t("lottery.importCsv")}
             <input
               type="file"
               accept=".csv,.txt"
@@ -301,30 +303,30 @@ export default function LotteryMachine() {
             className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border-2 border-red-300 bg-white text-red-600 font-body font-medium disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <Trash2 className="w-4 h-4" />
-            清除全部
+            {t("lottery.clearAll")}
           </button>
         </div>
 
         <textarea
           value={participantsText}
           onChange={(e) => setParticipantsText(e.target.value)}
-          placeholder="輸入參與者名稱&#10;支援：換行、逗號(,)、中文逗號(，)、頓號(、)分隔&#10;例如：王小明, 李小華, 張小美&#10;或：王小明、李小華、張小美"
+          placeholder={t("lottery.placeholder")}
           className="w-full h-48 px-4 py-3 rounded-xl border-2 border-primary/20 bg-white font-body text-text placeholder:text-text/40 focus:outline-none focus:border-primary resize-none"
         />
 
         <p className="mt-2 text-sm text-text/60 font-body flex items-center gap-1">
           <FileText className="w-4 h-4" />
-          支援手動輸入或匯入 CSV 檔案（每行一位，或以逗號分隔）
+          {t("lottery.supportHint")}
         </p>
       </div>
 
       {/* Settings */}
       <div className="clay-card p-6">
-        <p className="font-body font-semibold text-text mb-4">抽獎設定</p>
+        <p className="font-body font-semibold text-text mb-4">{t("lottery.settings")}</p>
         <div className="flex items-center gap-4">
           <label className="flex items-center gap-2 font-body text-sm text-text/70">
             <Trophy className="w-4 h-4" />
-            抽出人數
+            {t("lottery.winnerCount")}
           </label>
           <input
             type="number"
@@ -334,13 +336,13 @@ export default function LotteryMachine() {
             onChange={(e) => setWinnerCount(Math.max(1, parseInt(e.target.value) || 1))}
             className="w-24 px-4 py-2 rounded-xl border-2 border-primary/20 bg-white font-body text-text text-center focus:outline-none focus:border-primary"
           />
-          <span className="font-body text-sm text-text/60">位</span>
+          <span className="font-body text-sm text-text/60">{t("lottery.winnerUnit")}</span>
         </div>
 
         {/* Validation message */}
         {participants.length > 0 && participants.length < winnerCount && (
           <p className="mt-3 text-red-500 font-body text-sm">
-            參與者人數（{participants.length}）少於抽出人數（{winnerCount}）
+            {t("lottery.notEnough")}
           </p>
         )}
       </div>
@@ -351,7 +353,7 @@ export default function LotteryMachine() {
           <div className="flex items-center gap-2 mb-4">
             <Trophy className="w-6 h-6 text-primary" />
             <span className="font-heading text-xl font-bold text-text">
-              中獎名單
+              {t("lottery.winnerList")}
             </span>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">

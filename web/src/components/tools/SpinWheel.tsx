@@ -9,8 +9,10 @@ import {
   Trash2,
   RotateCcw
 } from "lucide-react";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 export default function SpinWheel() {
+  const { t } = useLanguage();
   const [itemsText, setItemsText] = useState("");
   const [isSpinning, setIsSpinning] = useState(false);
   const [rotation, setRotation] = useState(0);
@@ -185,7 +187,7 @@ export default function SpinWheel() {
       return (
         <div className="w-full h-full rounded-full bg-gray-200 border-4 border-black flex items-center justify-center">
           <p className="text-gray-400 font-body text-sm text-center px-4">
-            請在下方輸入選項
+            {t("wheel.readyPrompt")}
           </p>
         </div>
       );
@@ -273,7 +275,7 @@ export default function SpinWheel() {
           {countdown !== null && (
             <div className="mt-4 px-4 py-2 bg-yellow-100 rounded-full border-2 border-yellow-400">
               <span className="font-heading text-yellow-700 font-bold">
-                {countdown} 秒後自動停止
+                {countdown} {t("wheel.autoStop")}
               </span>
             </div>
           )}
@@ -282,7 +284,7 @@ export default function SpinWheel() {
           {result && !isSpinning && (
             <div className="mt-6 p-4 bg-gradient-to-r from-yellow-100 to-orange-100 rounded-xl border-2 border-black min-w-[200px]">
               <p className="text-center font-body text-sm text-text/70 mb-1">
-                🎉 結果
+                {t("wheel.result")}
               </p>
               <p className="text-center font-heading text-2xl font-bold text-text">
                 {result}
@@ -300,12 +302,12 @@ export default function SpinWheel() {
               {isSpinning ? (
                 <>
                   <Square className="w-5 h-5" />
-                  停止
+                  {t("wheel.stop")}
                 </>
               ) : (
                 <>
                   <Play className="w-5 h-5" />
-                  開始轉動
+                  {t("wheel.start")}
                 </>
               )}
             </button>
@@ -316,14 +318,14 @@ export default function SpinWheel() {
                 className="inline-flex items-center gap-2 px-6 py-4 rounded-2xl border-2 border-black bg-white text-text font-body font-semibold"
               >
                 <RotateCcw className="w-5 h-5" />
-                重新開始
+                {t("wheel.restart")}
               </button>
             )}
           </div>
 
           {items.length < 2 && items.length > 0 && (
             <p className="mt-4 text-red-500 font-body text-sm">
-              請至少輸入 2 個選項
+              {t("wheel.minOptions")}
             </p>
           )}
         </div>
@@ -334,10 +336,10 @@ export default function SpinWheel() {
         <div className="flex items-center justify-between mb-3">
           <label className="flex items-center gap-2 font-body font-semibold text-text">
             <ListPlus className="w-5 h-5 text-primary" />
-            輪盤選項
+            {t("wheel.listTitle")}
           </label>
           <span className="font-body text-sm text-text/60">
-            共 <span className="font-semibold text-primary">{items.length}</span> 個選項
+            {t("wheel.totalPrefix")} <span className="font-semibold text-primary">{items.length}</span> {t("wheel.totalSuffix")}
           </span>
         </div>
 
@@ -348,14 +350,14 @@ export default function SpinWheel() {
             className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border-2 border-red-300 bg-white text-red-600 font-body font-medium disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <Trash2 className="w-4 h-4" />
-            清除全部
+            {t("wheel.clearAll")}
           </button>
         </div>
 
         <textarea
           value={itemsText}
           onChange={(e) => setItemsText(e.target.value)}
-          placeholder="輸入輪盤選項&#10;支援：換行、逗號(,)、中文逗號(，)、頓號(、)分隔&#10;例如：選項A, 選項B, 選項C"
+          placeholder={t("wheel.placeholder")}
           className="w-full h-36 px-4 py-3 rounded-xl border-2 border-primary/20 bg-white font-body text-text placeholder:text-text/40 focus:outline-none focus:border-primary resize-none"
           disabled={isSpinning}
         />
@@ -363,11 +365,11 @@ export default function SpinWheel() {
 
       {/* Settings */}
       <div className="clay-card p-6">
-        <p className="font-body font-semibold text-text mb-4">設定</p>
+        <p className="font-body font-semibold text-text mb-4">{t("wheel.settings")}</p>
         <div className="flex items-center gap-4">
           <label className="flex items-center gap-2 font-body text-sm text-text/70">
             <Timer className="w-4 h-4" />
-            自動停止
+            {t("wheel.autoStopLabel")}
           </label>
           <input
             type="number"
@@ -378,7 +380,7 @@ export default function SpinWheel() {
             className="w-20 px-4 py-2 rounded-xl border-2 border-primary/20 bg-white font-body text-text text-center focus:outline-none focus:border-primary"
             disabled={isSpinning}
           />
-          <span className="font-body text-sm text-text/60">秒（0 = 手動停止）</span>
+          <span className="font-body text-sm text-text/60">{t("wheel.autoStopHint")}</span>
         </div>
       </div>
     </div>

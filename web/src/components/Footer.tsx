@@ -1,7 +1,12 @@
+"use client";
+
 import { Wrench, User, Globe } from "lucide-react";
 import Link from "next/link";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 export default function Footer() {
+  const { t } = useLanguage();
+
   return (
     <footer className="py-12 border-t border-primary/10">
       <div className="max-w-6xl mx-auto px-4">
@@ -18,7 +23,7 @@ export default function Footer() {
 
           {/* Copyright */}
           <p className="font-body text-sm text-text/60">
-            © {new Date().getFullYear()} Vibe Coding Tools. Made with{" "}
+            © {new Date().getFullYear()} Vibe Coding Tools. {t("footer.madeWith")}{" "}
             <a
               href="https://creatorhome.tw/"
               target="_blank"
@@ -36,8 +41,8 @@ export default function Footer() {
               target="_blank"
               rel="noopener noreferrer"
               className="w-10 h-10 rounded-xl bg-accent-light flex items-center justify-center"
-              aria-label="個人連結"
-              title="個人連結"
+              aria-label={t("footer.personalLink")}
+              title={t("footer.personalLink")}
             >
               <User className="w-5 h-5 text-text/70" />
             </a>
@@ -46,8 +51,8 @@ export default function Footer() {
               target="_blank"
               rel="noopener noreferrer"
               className="w-10 h-10 rounded-xl bg-accent-light flex items-center justify-center"
-              aria-label="官網"
-              title="Create Home 官網"
+              aria-label={t("footer.officialSite")}
+              title={t("footer.officialSite")}
             >
               <Globe className="w-5 h-5 text-text/70" />
             </a>

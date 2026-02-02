@@ -1,11 +1,15 @@
 "use client";
 
-import { Wrench, Menu, X } from "lucide-react";
+import { Wrench, Menu, X, Globe } from "lucide-react";
 import { useState } from "react";
 import Link from "next/link";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { locale, setLocale, t } = useLanguage();
+
+  const toggleLang = () => setLocale(locale === "zh" ? "en" : "zh");
 
   return (
     <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-primary/10">
@@ -25,16 +29,24 @@ export default function Header() {
             href="/tools"
             className="font-body font-medium text-text/80"
           >
-            所有工具
+            {t("header.allTools")}
           </Link>
           <Link
             href="#features"
             className="font-body font-medium text-text/80"
           >
-            功能特色
+            {t("header.features")}
           </Link>
+          <button
+            onClick={toggleLang}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border-2 border-black/10 bg-white font-body text-sm font-medium text-text/80 transition-all"
+            aria-label="Switch language"
+          >
+            <Globe className="w-4 h-4" />
+            {locale === "zh" ? "EN" : "中文"}
+          </button>
           <button className="clay-button-primary">
-            開始探索
+            {t("header.explore")}
           </button>
         </div>
 
@@ -42,7 +54,7 @@ export default function Header() {
         <button
           className="md:hidden p-2 rounded-xl"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
-          aria-label={isMenuOpen ? "關閉選單" : "開啟選單"}
+          aria-label={isMenuOpen ? t("header.closeMenu") : t("header.openMenu")}
         >
           {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
@@ -55,16 +67,23 @@ export default function Header() {
             href="/tools"
             className="block py-2 font-body font-medium text-text/80"
           >
-            所有工具
+            {t("header.allTools")}
           </Link>
           <Link
             href="#features"
             className="block py-2 font-body font-medium text-text/80"
           >
-            功能特色
+            {t("header.features")}
           </Link>
+          <button
+            onClick={toggleLang}
+            className="flex items-center gap-1.5 py-2 font-body font-medium text-text/80"
+          >
+            <Globe className="w-4 h-4" />
+            {locale === "zh" ? "Switch to English" : "切換為中文"}
+          </button>
           <button className="clay-button-primary w-full">
-            開始探索
+            {t("header.explore")}
           </button>
         </div>
       )}

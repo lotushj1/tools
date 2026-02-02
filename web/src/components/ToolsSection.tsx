@@ -1,63 +1,74 @@
-import { QrCode, Type, Gift, Circle, Timer, Hourglass } from "lucide-react";
-import ToolCard from "./ToolCard";
+"use client";
 
-const tools = [
+import { QrCode, Type, Gift, Circle, Timer, Hourglass, LucideIcon } from "lucide-react";
+import ToolCard from "./ToolCard";
+import { useLanguage } from "@/i18n/LanguageContext";
+
+const tools: { titleKey: string; descKey: string; icon: LucideIcon; href: string }[] = [
   {
-    title: "QR Code 產生器",
-    description: "將任意文字或網址轉換為 QR Code，支援自訂樣式與下載",
+    titleKey: "tool.qr.title",
+    descKey: "tool.qr.desc",
     icon: QrCode,
     href: "/tools/qr-generator",
   },
   {
-    title: "文字處理工具",
-    description: "字數計算、中英加空格、行間加空白，一鍵完成文字排版",
+    titleKey: "tool.text.title",
+    descKey: "tool.text.desc",
     icon: Type,
     href: "/tools/text-processor",
   },
   {
-    title: "抽獎扭蛋機",
-    description: "輸入名單或匯入 CSV，扭蛋機動畫抽出幸運得獎者",
+    titleKey: "tool.lottery.title",
+    descKey: "tool.lottery.desc",
     icon: Gift,
     href: "/tools/lottery",
   },
   {
-    title: "幸運輪盤",
-    description: "自訂輪盤選項，轉動輪盤隨機抽選，支援手動或自動停止",
+    titleKey: "tool.wheel.title",
+    descKey: "tool.wheel.desc",
     icon: Circle,
     href: "/tools/spin-wheel",
   },
   {
-    title: "番茄鐘",
-    description: "專注工作法計時器，自訂專注與休息時間，提升工作效率",
+    titleKey: "tool.pomodoro.title",
+    descKey: "tool.pomodoro.desc",
     icon: Timer,
     href: "/tools/pomodoro",
   },
   {
-    title: "倒數計時器",
-    description: "設定日期倒數，產生嵌入程式碼，適用商品販售與募資活動",
+    titleKey: "tool.countdown.title",
+    descKey: "tool.countdown.desc",
     icon: Hourglass,
     href: "/tools/countdown",
   },
 ];
 
 export default function ToolsSection() {
+  const { t } = useLanguage();
+
   return (
     <section className="py-20 bg-gradient-to-b from-transparent to-accent-light/30">
       <div className="max-w-6xl mx-auto px-4">
         {/* Section Header */}
         <div className="text-center mb-12">
           <h2 className="font-heading text-3xl md:text-4xl font-bold text-text mb-4">
-            工具列表
+            {t("tools.sectionTitle")}
           </h2>
           <p className="font-body text-text/70 max-w-xl mx-auto">
-            免費實用的小工具，即開即用
+            {t("tools.sectionSubtitle")}
           </p>
         </div>
 
         {/* Tools Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-3xl mx-auto">
           {tools.map((tool) => (
-            <ToolCard key={tool.href} {...tool} />
+            <ToolCard
+              key={tool.href}
+              title={t(tool.titleKey)}
+              description={t(tool.descKey)}
+              icon={tool.icon}
+              href={tool.href}
+            />
           ))}
         </div>
       </div>

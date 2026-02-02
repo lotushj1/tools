@@ -1,6 +1,11 @@
+"use client";
+
 import { Rocket, ArrowRight } from "lucide-react";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 export default function CTA() {
+  const { t } = useLanguage();
+
   return (
     <section className="py-20">
       <div className="max-w-4xl mx-auto px-4">
@@ -17,15 +22,15 @@ export default function CTA() {
           </div>
 
           <h2 className="font-heading text-3xl md:text-4xl font-bold text-text mb-4 text-balance">
-            準備好提升你的開發體驗了嗎？
+            {t("cta.title")}
           </h2>
 
           <p className="font-body text-text/70 text-lg mb-8 max-w-xl mx-auto">
-            立即探索所有工具，讓開發變得更簡單、更有趣
+            {t("cta.subtitle")}
           </p>
 
           <button className="clay-button-primary text-lg px-10 py-4">
-            立即開始
+            {t("cta.button")}
             <ArrowRight className="w-5 h-5" />
           </button>
         </div>

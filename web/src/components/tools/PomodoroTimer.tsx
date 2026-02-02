@@ -12,10 +12,12 @@ import {
   VolumeX,
   SkipForward
 } from "lucide-react";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 type TimerMode = "work" | "break";
 
 export default function PomodoroTimer() {
+  const { t } = useLanguage();
   const [workMinutes, setWorkMinutes] = useState(25);
   const [breakMinutes, setBreakMinutes] = useState(5);
   const [timeLeft, setTimeLeft] = useState(25 * 60); // in seconds
@@ -150,12 +152,12 @@ export default function PomodoroTimer() {
             {mode === "work" ? (
               <>
                 <Briefcase className="w-5 h-5" />
-                <span className="font-heading font-bold">專注時間</span>
+                <span className="font-heading font-bold">{t("pomodoro.work")}</span>
               </>
             ) : (
               <>
                 <Coffee className="w-5 h-5" />
-                <span className="font-heading font-bold">休息時間</span>
+                <span className="font-heading font-bold">{t("pomodoro.break")}</span>
               </>
             )}
           </div>
@@ -193,7 +195,7 @@ export default function PomodoroTimer() {
                 {formatTime(timeLeft)}
               </span>
               <span className="font-body text-text/60 mt-2">
-                第 {rounds + 1} 輪
+                {t("pomodoro.round", { n: rounds + 1 })}
               </span>
             </div>
           </div>
@@ -203,7 +205,7 @@ export default function PomodoroTimer() {
             <button
               onClick={resetTimer}
               className="w-12 h-12 rounded-full border-2 border-black bg-white flex items-center justify-center"
-              title="重置"
+              title={t("pomodoro.reset")}
             >
               <RotateCcw className="w-5 h-5 text-text" />
             </button>
@@ -226,7 +228,7 @@ export default function PomodoroTimer() {
             <button
               onClick={skipToNext}
               className="w-12 h-12 rounded-full border-2 border-black bg-white flex items-center justify-center"
-              title="跳過"
+              title={t("pomodoro.skip")}
             >
               <SkipForward className="w-5 h-5 text-text" />
             </button>
@@ -234,9 +236,9 @@ export default function PomodoroTimer() {
 
           {/* Completed rounds */}
           <div className="mt-6 flex items-center gap-2">
-            <span className="font-body text-text/60">已完成：</span>
+            <span className="font-body text-text/60">{t("pomodoro.completed")}</span>
             <span className="font-heading font-bold text-primary">{rounds}</span>
-            <span className="font-body text-text/60">輪</span>
+            <span className="font-body text-text/60">{t("pomodoro.roundUnit")}</span>
           </div>
         </div>
       </div>
@@ -246,7 +248,7 @@ export default function PomodoroTimer() {
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
             <Settings className="w-5 h-5 text-primary" />
-            <span className="font-body font-semibold text-text">設定</span>
+            <span className="font-body font-semibold text-text">{t("pomodoro.settings")}</span>
           </div>
           <button
             onClick={() => setSoundEnabled(prev => !prev)}
@@ -255,7 +257,7 @@ export default function PomodoroTimer() {
                 ? "border-primary bg-primary/10 text-primary"
                 : "border-gray-300 bg-gray-100 text-gray-400"
             }`}
-            title={soundEnabled ? "關閉音效" : "開啟音效"}
+            title={soundEnabled ? t("pomodoro.muteSound") : t("pomodoro.enableSound")}
           >
             {soundEnabled ? (
               <Volume2 className="w-5 h-5" />
@@ -270,7 +272,7 @@ export default function PomodoroTimer() {
           <div>
             <label className="flex items-center gap-2 font-body text-sm text-text/70 mb-2">
               <Briefcase className="w-4 h-4" />
-              專注時間
+              {t("pomodoro.workTime")}
             </label>
             <div className="flex items-center gap-2">
               <input
@@ -288,7 +290,7 @@ export default function PomodoroTimer() {
                 disabled={isRunning}
                 className="w-20 px-3 py-2 rounded-xl border-2 border-primary/20 bg-white font-body text-text text-center focus:outline-none focus:border-primary disabled:opacity-50"
               />
-              <span className="font-body text-text/60">分鐘</span>
+              <span className="font-body text-text/60">{t("pomodoro.minutes")}</span>
             </div>
           </div>
 
@@ -296,7 +298,7 @@ export default function PomodoroTimer() {
           <div>
             <label className="flex items-center gap-2 font-body text-sm text-text/70 mb-2">
               <Coffee className="w-4 h-4" />
-              休息時間
+              {t("pomodoro.breakTime")}
             </label>
             <div className="flex items-center gap-2">
               <input
@@ -314,14 +316,14 @@ export default function PomodoroTimer() {
                 disabled={isRunning}
                 className="w-20 px-3 py-2 rounded-xl border-2 border-primary/20 bg-white font-body text-text text-center focus:outline-none focus:border-primary disabled:opacity-50"
               />
-              <span className="font-body text-text/60">分鐘</span>
+              <span className="font-body text-text/60">{t("pomodoro.minutes")}</span>
             </div>
           </div>
         </div>
 
         {/* Quick presets */}
         <div className="mt-4 pt-4 border-t border-gray-200">
-          <p className="font-body text-sm text-text/60 mb-2">快速設定</p>
+          <p className="font-body text-sm text-text/60 mb-2">{t("pomodoro.quickPresets")}</p>
           <div className="flex flex-wrap gap-2">
             <button
               onClick={() => {
@@ -334,7 +336,7 @@ export default function PomodoroTimer() {
               disabled={isRunning}
               className="px-3 py-1.5 rounded-lg border-2 border-gray-200 bg-white font-body text-sm text-text disabled:opacity-50"
             >
-              25/5 經典
+              {t("pomodoro.preset1")}
             </button>
             <button
               onClick={() => {
@@ -347,7 +349,7 @@ export default function PomodoroTimer() {
               disabled={isRunning}
               className="px-3 py-1.5 rounded-lg border-2 border-gray-200 bg-white font-body text-sm text-text disabled:opacity-50"
             >
-              50/10 長專注
+              {t("pomodoro.preset2")}
             </button>
             <button
               onClick={() => {
@@ -360,7 +362,7 @@ export default function PomodoroTimer() {
               disabled={isRunning}
               className="px-3 py-1.5 rounded-lg border-2 border-gray-200 bg-white font-body text-sm text-text disabled:opacity-50"
             >
-              15/3 短衝刺
+              {t("pomodoro.preset3")}
             </button>
           </div>
         </div>
@@ -368,13 +370,13 @@ export default function PomodoroTimer() {
 
       {/* Tips */}
       <div className="clay-card p-6">
-        <p className="font-body font-semibold text-text mb-3">🍅 番茄鐘工作法</p>
+        <p className="font-body font-semibold text-text mb-3">{t("pomodoro.tipsTitle")}</p>
         <ul className="space-y-2 font-body text-sm text-text/70">
-          <li>1. 選擇一項待辦任務</li>
-          <li>2. 設定 25 分鐘專注計時</li>
-          <li>3. 專心工作直到計時結束</li>
-          <li>4. 短休息 5 分鐘</li>
-          <li>5. 每完成 4 輪，長休息 15-30 分鐘</li>
+          <li>{t("pomodoro.tip1")}</li>
+          <li>{t("pomodoro.tip2")}</li>
+          <li>{t("pomodoro.tip3")}</li>
+          <li>{t("pomodoro.tip4")}</li>
+          <li>{t("pomodoro.tip5")}</li>
         </ul>
       </div>
     </div>

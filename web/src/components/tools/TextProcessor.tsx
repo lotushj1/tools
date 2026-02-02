@@ -2,10 +2,12 @@
 
 import { useState } from "react";
 import { Type, Space, SplitSquareVertical, Sparkles, Trash2, Copy, Check, Eye, ThumbsUp, MessageCircle, Share2 } from "lucide-react";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 export default function TextProcessor() {
   const [text, setText] = useState("");
   const [copied, setCopied] = useState(false);
+  const { t } = useLanguage();
 
   // Calculate character count
   const charCount = text.length;
@@ -75,18 +77,18 @@ export default function TextProcessor() {
               className="flex items-center gap-2 font-body font-semibold text-text"
             >
               <Type className="w-5 h-5 text-primary" />
-              輸入或貼上文字
+              {t("textProc.inputLabel")}
             </label>
             <div className="font-body text-sm text-text/60">
-              共 <span className="font-semibold text-primary">{charCount}</span> 字
-              （不含空白 <span className="font-semibold text-primary">{charCountNoSpaces}</span> 字）
+              {t("textProc.charCount")} <span className="font-semibold text-primary">{charCount}</span> {t("textProc.charUnit")}
+              {t("textProc.noSpace")} <span className="font-semibold text-primary">{charCountNoSpaces}</span> {t("textProc.charUnit2")}
             </div>
           </div>
           <textarea
             id="text-input"
             value={text}
             onChange={(e) => setText(e.target.value)}
-            placeholder="在此輸入或貼上文字..."
+            placeholder={t("textProc.placeholder")}
             className="w-full h-80 px-4 py-3 rounded-xl border-2 border-primary/20 bg-white font-body text-text placeholder:text-text/40 focus:outline-none focus:border-primary resize-none"
           />
         </div>
@@ -95,7 +97,7 @@ export default function TextProcessor() {
         <div className="clay-card p-6">
           <div className="flex items-center gap-2 mb-3">
             <Eye className="w-5 h-5 text-primary" />
-            <span className="font-body font-semibold text-text">社群貼文預覽</span>
+            <span className="font-body font-semibold text-text">{t("textProc.previewTitle")}</span>
           </div>
 
           {/* Facebook-style Post Preview */}
@@ -107,7 +109,7 @@ export default function TextProcessor() {
               </div>
               <div>
                 <p className="font-semibold text-gray-900 text-sm">Your Name</p>
-                <p className="text-xs text-gray-500">剛剛 · 🌐</p>
+                <p className="text-xs text-gray-500">{t("textProc.justNow")}</p>
               </div>
             </div>
 
@@ -118,7 +120,7 @@ export default function TextProcessor() {
                   {text}
                 </p>
               ) : (
-                <p className="text-gray-400 text-[15px]">輸入文字後，這裡會顯示貼文預覽...</p>
+                <p className="text-gray-400 text-[15px]">{t("textProc.previewPlaceholder")}</p>
               )}
             </div>
 
@@ -126,7 +128,7 @@ export default function TextProcessor() {
             <div className="px-4 py-2 border-t border-gray-100">
               <div className="flex items-center justify-between text-gray-500 text-sm">
                 <span>👍 0</span>
-                <span>0 則留言</span>
+                <span>{t("textProc.comments")}</span>
               </div>
             </div>
 
@@ -134,15 +136,15 @@ export default function TextProcessor() {
             <div className="px-2 py-1 border-t border-gray-100 flex">
               <button className="flex-1 flex items-center justify-center gap-2 py-2 text-gray-600 text-sm font-medium rounded-lg">
                 <ThumbsUp className="w-5 h-5" />
-                讚
+                {t("textProc.like")}
               </button>
               <button className="flex-1 flex items-center justify-center gap-2 py-2 text-gray-600 text-sm font-medium rounded-lg">
                 <MessageCircle className="w-5 h-5" />
-                留言
+                {t("textProc.comment")}
               </button>
               <button className="flex-1 flex items-center justify-center gap-2 py-2 text-gray-600 text-sm font-medium rounded-lg">
                 <Share2 className="w-5 h-5" />
-                分享
+                {t("textProc.share")}
               </button>
             </div>
           </div>
@@ -151,7 +153,7 @@ export default function TextProcessor() {
 
       {/* Action Buttons */}
       <div className="clay-card p-6">
-        <p className="font-body font-semibold text-text mb-4">文字處理功能</p>
+        <p className="font-body font-semibold text-text mb-4">{t("textProc.functionsTitle")}</p>
         <div className="flex flex-wrap gap-3">
           {/* Add space between CJK and Latin */}
           <button
@@ -161,7 +163,7 @@ export default function TextProcessor() {
             title="在中文與英數字之間添加半形空格"
           >
             <Space className="w-5 h-5" />
-            中英加空格
+            {t("textProc.addSpace")}
           </button>
 
           {/* Add blank character between lines */}
@@ -172,7 +174,7 @@ export default function TextProcessor() {
             title="在每行之間添加空白符號"
           >
             <SplitSquareVertical className="w-5 h-5" />
-            行間加空白
+            {t("textProc.addBlank")}
           </button>
 
           {/* Both operations */}
@@ -183,7 +185,7 @@ export default function TextProcessor() {
             title="同時執行以上兩個功能"
           >
             <Sparkles className="w-5 h-5" />
-            一鍵全部處理
+            {t("textProc.processAll")}
           </button>
 
           {/* Clear */}
@@ -194,7 +196,7 @@ export default function TextProcessor() {
             title="清除所有文字"
           >
             <Trash2 className="w-5 h-5" />
-            清除文字
+            {t("textProc.clear")}
           </button>
         </div>
       </div>
@@ -203,7 +205,7 @@ export default function TextProcessor() {
       {text && (
         <div className="clay-card p-6">
           <div className="flex items-center justify-between">
-            <p className="font-body text-text/70">處理完成後，複製結果</p>
+            <p className="font-body text-text/70">{t("textProc.copyHint")}</p>
             <button
               onClick={handleCopy}
               className={`inline-flex items-center gap-2 px-6 py-3 rounded-xl border-2 font-body font-semibold ${
@@ -215,12 +217,12 @@ export default function TextProcessor() {
               {copied ? (
                 <>
                   <Check className="w-5 h-5" />
-                  已複製！
+                  {t("textProc.copyDone")}
                 </>
               ) : (
                 <>
                   <Copy className="w-5 h-5" />
-                  複製文字
+                  {t("textProc.copyText")}
                 </>
               )}
             </button>

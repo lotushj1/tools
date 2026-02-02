@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import AgentationProvider from "@/components/AgentationProvider";
+import { LanguageProvider } from "@/i18n/LanguageContext";
 
 const siteUrl = "https://lotushj1.github.io/tools";
 const siteName = "Vibe Tools";
@@ -65,7 +66,9 @@ export default function RootLayout({
   return (
     <html lang="zh-TW">
       <body className="antialiased">
-        {children}
+        <LanguageProvider>
+          {children}
+        </LanguageProvider>
         <AgentationProvider />
       </body>
     </html>

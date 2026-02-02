@@ -10,11 +10,12 @@ import {
   Eye,
   ChevronDown,
 } from "lucide-react";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 // ─── Types ───────────────────────────────────────────────
 interface ThemeOption {
   id: string;
-  name: string;
+  nameKey: string;
   bg: string;
   cardBg: string;
   digitBg: string;
@@ -33,7 +34,7 @@ type SizeOption = "sm" | "md" | "lg";
 const themes: ThemeOption[] = [
   {
     id: "orange",
-    name: "經典橘",
+    nameKey: "countdown.themeOrange",
     bg: "transparent",
     cardBg: "#FFFBF5",
     digitBg: "#FFF7ED",
@@ -46,7 +47,7 @@ const themes: ThemeOption[] = [
   },
   {
     id: "dark",
-    name: "深色質感",
+    nameKey: "countdown.themeDark",
     bg: "transparent",
     cardBg: "#1E1E2E",
     digitBg: "#2A2A3E",
@@ -59,7 +60,7 @@ const themes: ThemeOption[] = [
   },
   {
     id: "blue",
-    name: "藍色科技",
+    nameKey: "countdown.themeBlue",
     bg: "transparent",
     cardBg: "#F0F7FF",
     digitBg: "#DBEAFE",
@@ -72,7 +73,7 @@ const themes: ThemeOption[] = [
   },
   {
     id: "pink",
-    name: "粉紅甜美",
+    nameKey: "countdown.themePink",
     bg: "transparent",
     cardBg: "#FFF5F7",
     digitBg: "#FFE4EC",
@@ -85,7 +86,7 @@ const themes: ThemeOption[] = [
   },
   {
     id: "green",
-    name: "綠色清新",
+    nameKey: "countdown.themeGreen",
     bg: "transparent",
     cardBg: "#F0FDF4",
     digitBg: "#DCFCE7",
@@ -98,7 +99,7 @@ const themes: ThemeOption[] = [
   },
   {
     id: "minimal",
-    name: "簡約白",
+    nameKey: "countdown.themeMinimal",
     bg: "transparent",
     cardBg: "#FFFFFF",
     digitBg: "#F3F4F6",
@@ -236,6 +237,8 @@ function generateHtmlSnippet(
 
 // ─── Main Component ──────────────────────────────────────
 export default function CountdownTimer() {
+  const { t } = useLanguage();
+
   // Settings
   const [title, setTitle] = useState("早鳥優惠倒數");
   const [targetDate, setTargetDate] = useState(() => {
@@ -258,7 +261,7 @@ export default function CountdownTimer() {
   const [countdown, setCountdown] = useState(getCountdown(targetDate));
   const [showThemeDropdown, setShowThemeDropdown] = useState(false);
 
-  const theme = themes.find((t) => t.id === selectedTheme) || themes[0];
+  const theme = themes.find((th) => th.id === selectedTheme) || themes[0];
   const s = sizeConfigs[size];
 
   // Live countdown
@@ -324,10 +327,10 @@ export default function CountdownTimer() {
 
   // Preview units
   const visibleUnits: { key: string; label: string; value: number }[] = [];
-  if (showDays) visibleUnits.push({ key: "d", label: "天", value: countdown.days });
-  if (showHours) visibleUnits.push({ key: "h", label: "時", value: countdown.hours });
-  if (showMinutes) visibleUnits.push({ key: "m", label: "分", value: countdown.minutes });
-  if (showSeconds) visibleUnits.push({ key: "s", label: "秒", value: countdown.seconds });
+  if (showDays) visibleUnits.push({ key: "d", label: t("countdown.days"), value: countdown.days });
+  if (showHours) visibleUnits.push({ key: "h", label: t("countdown.hours"), value: countdown.hours });
+  if (showMinutes) visibleUnits.push({ key: "m", label: t("countdown.minutes"), value: countdown.minutes });
+  if (showSeconds) visibleUnits.push({ key: "s", label: t("countdown.seconds"), value: countdown.seconds });
 
   return (
     <div className="space-y-6">
@@ -335,20 +338,20 @@ export default function CountdownTimer() {
       <div className="clay-card p-6">
         <div className="flex items-center gap-2 mb-5">
           <Calendar className="w-5 h-5 text-primary" />
-          <span className="font-heading font-bold text-text text-lg">基本設定</span>
+          <span className="font-heading font-bold text-text text-lg">{t("countdown.basicSettings")}</span>
         </div>
 
         <div className="space-y-4">
           {/* Title */}
           <div>
             <label className="block font-body text-sm text-text/70 mb-1.5">
-              倒數標題
+              {t("countdown.titleLabel")}
             </label>
             <input
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              placeholder="例如：早鳥優惠倒數"
+              placeholder={t("countdown.titlePlaceholder")}
               className="w-full px-4 py-2.5 rounded-xl border-2 border-black/10 bg-white font-body text-text focus:outline-none focus:border-primary"
             />
           </div>
@@ -356,7 +359,7 @@ export default function CountdownTimer() {
           {/* Target date */}
           <div>
             <label className="block font-body text-sm text-text/70 mb-1.5">
-              目標日期與時間
+              {t("countdown.dateLabel")}
             </label>
             <input
               type="datetime-local"
@@ -369,13 +372,13 @@ export default function CountdownTimer() {
           {/* Expired text */}
           <div>
             <label className="block font-body text-sm text-text/70 mb-1.5">
-              到期顯示文字
+              {t("countdown.expiredLabel")}
             </label>
             <input
               type="text"
               value={expiredText}
               onChange={(e) => setExpiredText(e.target.value)}
-              placeholder="活動已結束"
+              placeholder={t("countdown.expiredPlaceholder")}
               className="w-full px-4 py-2.5 rounded-xl border-2 border-black/10 bg-white font-body text-text focus:outline-none focus:border-primary"
             />
           </div>
@@ -386,19 +389,19 @@ export default function CountdownTimer() {
       <div className="clay-card p-6">
         <div className="flex items-center gap-2 mb-5">
           <Palette className="w-5 h-5 text-primary" />
-          <span className="font-heading font-bold text-text text-lg">外觀設定</span>
+          <span className="font-heading font-bold text-text text-lg">{t("countdown.appearanceSettings")}</span>
         </div>
 
         {/* Theme selector */}
         <div className="mb-4">
-          <label className="block font-body text-sm text-text/70 mb-2">配色主題</label>
+          <label className="block font-body text-sm text-text/70 mb-2">{t("countdown.themeLabel")}</label>
           <div className="grid grid-cols-3 sm:grid-cols-6 gap-2">
-            {themes.map((t) => (
+            {themes.map((th) => (
               <button
-                key={t.id}
-                onClick={() => setSelectedTheme(t.id)}
+                key={th.id}
+                onClick={() => setSelectedTheme(th.id)}
                 className={`relative flex flex-col items-center gap-1.5 p-2.5 rounded-xl border-2 transition-all ${
-                  selectedTheme === t.id
+                  selectedTheme === th.id
                     ? "border-black bg-primary/5"
                     : "border-black/10 bg-white"
                 }`}
@@ -406,15 +409,15 @@ export default function CountdownTimer() {
                 <div className="flex gap-1">
                   <div
                     className="w-4 h-4 rounded-full border border-black/20"
-                    style={{ background: t.digitBg }}
+                    style={{ background: th.digitBg }}
                   />
                   <div
                     className="w-4 h-4 rounded-full border border-black/20"
-                    style={{ background: t.accent }}
+                    style={{ background: th.accent }}
                   />
                 </div>
-                <span className="font-body text-xs text-text/70">{t.name}</span>
-                {selectedTheme === t.id && (
+                <span className="font-body text-xs text-text/70">{t(th.nameKey)}</span>
+                {selectedTheme === th.id && (
                   <div className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-primary flex items-center justify-center">
                     <Check className="w-2.5 h-2.5 text-white" />
                   </div>
@@ -426,7 +429,7 @@ export default function CountdownTimer() {
 
         {/* Size */}
         <div className="mb-4">
-          <label className="block font-body text-sm text-text/70 mb-2">尺寸</label>
+          <label className="block font-body text-sm text-text/70 mb-2">{t("countdown.sizeLabel")}</label>
           <div className="flex gap-2">
             {(["sm", "md", "lg"] as SizeOption[]).map((opt) => (
               <button
@@ -438,7 +441,7 @@ export default function CountdownTimer() {
                     : "border-black/10 bg-white text-text/70"
                 }`}
               >
-                {opt === "sm" ? "小" : opt === "md" ? "中" : "大"}
+                {opt === "sm" ? t("countdown.sizeSmall") : opt === "md" ? t("countdown.sizeMedium") : t("countdown.sizeLarge")}
               </button>
             ))}
           </div>
@@ -446,13 +449,13 @@ export default function CountdownTimer() {
 
         {/* Display toggles */}
         <div>
-          <label className="block font-body text-sm text-text/70 mb-2">顯示項目</label>
+          <label className="block font-body text-sm text-text/70 mb-2">{t("countdown.displayLabel")}</label>
           <div className="flex flex-wrap gap-2">
             {[
-              { label: "天", state: showDays, setter: setShowDays },
-              { label: "時", state: showHours, setter: setShowHours },
-              { label: "分", state: showMinutes, setter: setShowMinutes },
-              { label: "秒", state: showSeconds, setter: setShowSeconds },
+              { label: t("countdown.days"), state: showDays, setter: setShowDays },
+              { label: t("countdown.hours"), state: showHours, setter: setShowHours },
+              { label: t("countdown.minutes"), state: showMinutes, setter: setShowMinutes },
+              { label: t("countdown.seconds"), state: showSeconds, setter: setShowSeconds },
             ].map((item) => (
               <button
                 key={item.label}
@@ -474,7 +477,7 @@ export default function CountdownTimer() {
       <div className="clay-card p-6">
         <div className="flex items-center gap-2 mb-5">
           <Eye className="w-5 h-5 text-primary" />
-          <span className="font-heading font-bold text-text text-lg">即時預覽</span>
+          <span className="font-heading font-bold text-text text-lg">{t("countdown.preview")}</span>
         </div>
 
         <div className="flex justify-center py-6 bg-gray-50 rounded-xl border-2 border-black/10">
@@ -603,7 +606,7 @@ export default function CountdownTimer() {
       <div className="clay-card p-6">
         <div className="flex items-center gap-2 mb-5">
           <Code className="w-5 h-5 text-primary" />
-          <span className="font-heading font-bold text-text text-lg">嵌入程式碼</span>
+          <span className="font-heading font-bold text-text text-lg">{t("countdown.embedTitle")}</span>
         </div>
 
         {/* Tabs */}
@@ -616,7 +619,7 @@ export default function CountdownTimer() {
                 : "border-black/10 bg-white text-text/70"
             }`}
           >
-            HTML 片段（永不失效）
+            {t("countdown.tabHtml")}
           </button>
           <button
             onClick={() => setEmbedTab("iframe")}
@@ -626,7 +629,7 @@ export default function CountdownTimer() {
                 : "border-black/10 bg-white text-text/70"
             }`}
           >
-            iframe 嵌入
+            {t("countdown.tabIframe")}
           </button>
         </div>
 
@@ -637,13 +640,9 @@ export default function CountdownTimer() {
             : "bg-blue-50 text-blue-700 border border-blue-200"
         }`}>
           {embedTab === "html" ? (
-            <>
-              <strong>推薦！</strong>程式碼包含完整的 HTML + JavaScript，貼上後即使本站離線也能正常運作，永遠不會失效。
-            </>
+            <>{t("countdown.hintHtml")}</>
           ) : (
-            <>
-              使用 iframe 嵌入，程式碼較短。需要本站正常運作才能顯示。
-            </>
+            <>{t("countdown.hintIframe")}</>
           )}
         </div>
 
@@ -663,12 +662,12 @@ export default function CountdownTimer() {
             {copied ? (
               <>
                 <Check className="w-3.5 h-3.5" />
-                已複製
+                {t("countdown.copied")}
               </>
             ) : (
               <>
                 <Copy className="w-3.5 h-3.5" />
-                複製
+                {t("countdown.copy")}
               </>
             )}
           </button>
@@ -676,11 +675,11 @@ export default function CountdownTimer() {
 
         {/* Usage tips */}
         <div className="mt-4 p-4 bg-accent-light/30 rounded-xl">
-          <p className="font-body text-sm font-bold text-text mb-2">使用方式</p>
+          <p className="font-body text-sm font-bold text-text mb-2">{t("countdown.usageTitle")}</p>
           <ol className="space-y-1 font-body text-sm text-text/70 list-decimal list-inside">
-            <li>點擊「複製」按鈕取得程式碼</li>
-            <li>貼到你網站的 HTML 中想顯示的位置</li>
-            <li>倒數計時會自動運作，到期後顯示結束文字</li>
+            <li>{t("countdown.usage1")}</li>
+            <li>{t("countdown.usage2")}</li>
+            <li>{t("countdown.usage3")}</li>
           </ol>
         </div>
       </div>
