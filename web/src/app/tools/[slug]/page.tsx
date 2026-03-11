@@ -36,6 +36,11 @@ const CountdownTimer = dynamic(
   { ssr: false }
 );
 
+const UnitConverter = dynamic(
+  () => import("@/components/tools/UnitConverter"),
+  { ssr: false }
+);
+
 const siteUrl = "https://lotushj1.github.io/tools";
 
 // Tool data with SEO-specific fields
@@ -78,6 +83,12 @@ const toolsData: Record<
     description:
       "免費線上倒數計時器，設定目標日期產生精美倒數卡片，支援嵌入網站，適用於商品販售與募資活動",
     keywords: ["倒數計時", "倒數計時器", "嵌入計時器", "募資倒數", "活動倒數"],
+  },
+  "unit-converter": {
+    title: "單位換算器",
+    description:
+      "免費線上單位換算器，支援長度、重量、溫度、面積、體積、速度、資料量、時間等常用單位即時換算",
+    keywords: ["單位換算", "單位轉換", "長度換算", "重量換算", "溫度換算", "面積換算"],
   },
 };
 
@@ -186,6 +197,7 @@ export default async function ToolPage({
           {slug === "spin-wheel" && <SpinWheel />}
           {slug === "pomodoro" && <PomodoroTimer />}
           {slug === "countdown" && <CountdownTimer />}
+          {slug === "unit-converter" && <UnitConverter />}
         </div>
       </main>
       <Footer />

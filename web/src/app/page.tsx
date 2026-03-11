@@ -13,7 +13,7 @@ const jsonLd = {
   name: "Vibe Tools",
   url: siteUrl,
   description:
-    "免費實用線上小工具集：QR Code 產生器、文字處理、抽獎扭蛋機、幸運輪盤、番茄鐘、倒數計時器",
+    "免費實用線上小工具集：QR Code 產生器、文字處理、抽獎扭蛋機、幸運輪盤、番茄鐘、倒數計時器、單位換算器",
   creator: {
     "@type": "Organization",
     name: "Create Home",
