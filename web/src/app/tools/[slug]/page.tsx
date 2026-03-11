@@ -41,6 +41,11 @@ const UnitConverter = dynamic(
   { ssr: false }
 );
 
+const ImageCompressor = dynamic(
+  () => import("@/components/tools/ImageCompressor"),
+  { ssr: false }
+);
+
 const siteUrl = "https://lotushj1.github.io/tools";
 
 // Tool data with SEO-specific fields
@@ -89,6 +94,12 @@ const toolsData: Record<
     description:
       "免費線上單位換算器，支援長度、重量、溫度、面積、體積、速度、資料量、時間等常用單位即時換算",
     keywords: ["單位換算", "單位轉換", "長度換算", "重量換算", "溫度換算", "面積換算"],
+  },
+  "image-compressor": {
+    title: "圖片壓縮轉檔",
+    description:
+      "免費線上圖片壓縮轉檔工具，支援 JPG、PNG、WebP 格式互轉，調整品質與尺寸，快速壓縮不失真",
+    keywords: ["圖片壓縮", "圖片轉檔", "JPG轉WebP", "PNG壓縮", "圖片縮小"],
   },
 };
 
@@ -198,6 +209,7 @@ export default async function ToolPage({
           {slug === "pomodoro" && <PomodoroTimer />}
           {slug === "countdown" && <CountdownTimer />}
           {slug === "unit-converter" && <UnitConverter />}
+          {slug === "image-compressor" && <ImageCompressor />}
         </div>
       </main>
       <Footer />

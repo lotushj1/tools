@@ -1,6 +1,6 @@
 "use client";
 
-import { QrCode, Type, Gift, Circle, Timer, Hourglass, ArrowLeftRight, LucideIcon } from "lucide-react";
+import { QrCode, Type, Gift, Circle, Timer, Hourglass, ArrowLeftRight, ImageDown, LucideIcon } from "lucide-react";
 import ToolCard from "./ToolCard";
 import { useLanguage } from "@/i18n/LanguageContext";
 
@@ -46,6 +46,12 @@ const tools: { titleKey: string; descKey: string; icon: LucideIcon; href: string
     descKey: "tool.unit.desc",
     icon: ArrowLeftRight,
     href: "/tools/unit-converter",
+  },
+  {
+    titleKey: "tool.img.title",
+    descKey: "tool.img.desc",
+    icon: ImageDown,
+    href: "/tools/image-compressor",
   },
 ];
 
