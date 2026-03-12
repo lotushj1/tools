@@ -1,6 +1,6 @@
 "use client";
 
-import { QrCode, Type, Gift, Circle, Timer, Hourglass, ArrowLeftRight, ImageDown, LucideIcon } from "lucide-react";
+import { QrCode, Type, Gift, Circle, Timer, Hourglass, ArrowLeftRight, ImageDown, KeyRound, LucideIcon } from "lucide-react";
 import ToolCard from "./ToolCard";
 import { useLanguage } from "@/i18n/LanguageContext";
 
@@ -52,6 +52,12 @@ const tools: { titleKey: string; descKey: string; icon: LucideIcon; href: string
     descKey: "tool.img.desc",
     icon: ImageDown,
     href: "/tools/image-compressor",
+  },
+  {
+    titleKey: "tool.pwd.title",
+    descKey: "tool.pwd.desc",
+    icon: KeyRound,
+    href: "/tools/password-generator",
   },
 ];
 

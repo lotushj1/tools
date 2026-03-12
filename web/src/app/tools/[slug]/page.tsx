@@ -46,6 +46,11 @@ const ImageCompressor = dynamic(
   { ssr: false }
 );
 
+const PasswordGenerator = dynamic(
+  () => import("@/components/tools/PasswordGenerator"),
+  { ssr: false }
+);
+
 const siteUrl = "https://lotushj1.github.io/tools";
 
 // Tool data with SEO-specific fields
@@ -100,6 +105,12 @@ const toolsData: Record<
     description:
       "免費線上圖片壓縮轉檔工具，支援 JPG、PNG、WebP 格式互轉，調整品質與尺寸，快速壓縮不失真",
     keywords: ["圖片壓縮", "圖片轉檔", "JPG轉WebP", "PNG壓縮", "圖片縮小"],
+  },
+  "password-generator": {
+    title: "密碼產生器",
+    description:
+      "免費線上密碼產生器，產生高強度隨機密碼，自訂長度與字元組合，支援批次產生多組密碼",
+    keywords: ["密碼產生器", "隨機密碼", "密碼生成", "強密碼", "安全密碼"],
   },
 };
 
@@ -210,6 +221,7 @@ export default async function ToolPage({
           {slug === "countdown" && <CountdownTimer />}
           {slug === "unit-converter" && <UnitConverter />}
           {slug === "image-compressor" && <ImageCompressor />}
+          {slug === "password-generator" && <PasswordGenerator />}
         </div>
       </main>
       <Footer />
